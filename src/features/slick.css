@@ -1,0 +1,12 @@
+.slick-arrow {
+  position: absolute;
+  top: 50%;
+}
+
+.slick-prev {
+  left: 5%;
+  z-index: 99;
+}
+.slick-next {
+  right: 5%;
+}

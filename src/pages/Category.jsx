@@ -1,5 +1,6 @@
 import React from "react";
+import Layout from "../components/Layout";
 
 export default function Category() {
-  return <div>Category</div>;
+  return <Layout>Category</Layout>;
 }

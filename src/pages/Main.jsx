@@ -1,11 +1,9 @@
 import React from "react";
-import Header from "../components/Header";
-
+import MainPage from "../features/MainPage";
 export default function Main() {
   return (
-    <div>
-      <Header />
-      Main
-    </div>
+    <>
+      <MainPage />
+    </>
   );
 }

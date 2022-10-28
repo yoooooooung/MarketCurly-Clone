@@ -12,17 +12,19 @@ import Main from "../pages/Main";
 // 2. Router 라는 함수를 만들고 아래와 같이 작성합니다.
 const Router = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />}></Route>
-        <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/cart" element={<Cart />}></Route>
-        <Route path="/like" element={<Like />}></Route>
-        <Route path="/detail" element={<Detail />}></Route>
-        <Route path="/category" element={<Category />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/like" element={<Like />}></Route>
+          <Route path="/detail" element={<Detail />}></Route>
+          <Route path="/category" element={<Category />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 };
 

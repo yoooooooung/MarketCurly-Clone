@@ -1,5 +1,5 @@
 // 초기 상태값
-import { createAsyncThunk, boardSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
@@ -9,11 +9,12 @@ const initialState = {
 };
 
 const boardSlice = createSlice({
-  name: "",
+  name: "slice",
   initialState,
   reducers: {},
   extraReducers: {},
 });
 
 // 모듈파일에서는 리듀서를 export default 한다.
-export default boardSlice;
+export const {} = boardSlice.actions;
+export default boardSlice.reducer;

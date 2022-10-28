@@ -1,0 +1,46 @@
+{
+  "user": [
+    {
+      "id": "",
+      "userId": "",
+      "password": "1234@",
+      "name": "미래",
+      "address": "서울 ~~"
+    }
+  ],
+  "goods": [
+    {
+      "goodsId": 1,
+      "goodsImage": "",
+      "goodsName": "",
+      "price": "",
+      "category": "채소"
+    }
+  ],
+  "carts": {
+    "cartsId": "id랑 일치시켜서 userId같은 걸 불러온다",
+    "id": "",
+    "goodsId": {
+      "goodsName": "빵",
+      "Image": "",
+      "goodsPrice": "6000",
+      "goodsQty": "3"
+    },
+    "qty": "",
+    "address": "user에 있는 address 같은 값(확정아님)"
+  },
+  "likes": {
+    "id": "",
+    "likesId": "",
+    "goodsId": ""
+  },
+  "comments": {
+    "commentsId": "",
+    "id": "",
+    "userName": "",
+    "commentsImage": "",
+    "content": "",
+    "createdAt": "",
+    "updatedAt": ""
+  }
+}

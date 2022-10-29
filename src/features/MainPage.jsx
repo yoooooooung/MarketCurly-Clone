@@ -21,7 +21,7 @@ export default function MainPage() {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 2,
     autoplay: true,
   };
@@ -73,7 +73,9 @@ export default function MainPage() {
         <ThirdImage>
           <img src="https://product-image.kurly.com/banner/random-band/pc/img/92aa1dca-7103-4fc3-9d2f-b6755ae43767.jpg" />
         </ThirdImage>
-        <div>MD의 추천</div>
+        <RecommendTwo>
+          <div>MD의 추천</div>
+        </RecommendTwo>
       </Layout>
     </>
   );
@@ -116,4 +118,13 @@ const ThirdImage = styled.div`
   img {
     width: 100%;
   }
+`;
+
+const RecommendTwo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 27px;
 `;

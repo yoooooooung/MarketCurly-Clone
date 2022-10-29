@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-// import Navbar from "../features/HambergerMenu/Navbar";
 
 export default function Header() {
   return (
@@ -16,7 +15,12 @@ export default function Header() {
         </Row1>
         <Row2>
           <Logo>
-            <img src={'https://blog.kakaocdn.net/dn/bjjrHJ/btqBPXNC9tF/Sibyn4CJ4fWFTMaqvUYt01/img.jpg'} alt="마켓컬리"/>
+            <img
+              src={
+                "https://blog.kakaocdn.net/dn/bjjrHJ/btqBPXNC9tF/Sibyn4CJ4fWFTMaqvUYt01/img.jpg"
+              }
+              alt="마켓컬리"
+            />
             {/* 이미지 경로 : https://blog.kakaocdn.net/dn/bjjrHJ/btqBPXNC9tF/Sibyn4CJ4fWFTMaqvUYt01/img.jpg */}
             {/* 이미지 불러오기 설정 참고 블로그  https://velog.io/@rimo09/React-Create-react-app-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90%EC%84%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EA%B2%BD%EB%A1%9C%EB%A5%BC-%EC%84%A4%EC%A0%95%ED%95%98%EB%8A%94-4%EA%B0%80%EC%A7%80-%EB%B0%A9%EB%B2%95 */}
             <div>
@@ -36,7 +40,6 @@ export default function Header() {
           <Ctgs>
             <a href="#">
               <p>{/* 햄버거로고 */}</p>
-              {/* <Navbar /> */}
             </a>
             <Ctg>
               <a href="#">채소</a>
@@ -68,7 +71,7 @@ export default function Header() {
 
 const HeaderHeader = styled.div`
   width: 100%;
-  box-shadow:0 3px 53px -3px  lightgray;
+  box-shadow: 0 5px 7px -5px lightgray;
 `;
 const HeaderLayout = styled.div`
   width: 1050px;
@@ -156,17 +159,17 @@ const Row2 = styled.div`
     div {
       font-size: 18px;
       display: inline-flex;
-      vertical-align:middle;
-      gap:14px;
+      vertical-align: middle;
+      gap: 14px;
 
       p {
         color: purple;
         font-weight: 500;
       }
       p:nth-child(2) {
-        padding:10px 0;
-        font-size:12px;
-        color:lightgray;
+        padding: 10px 0;
+        font-size: 12px;
+        color: lightgray;
       }
       p:last-child {
         color: lightgray;

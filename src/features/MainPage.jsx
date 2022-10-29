@@ -13,9 +13,17 @@ export default function MainPage() {
     speed: 600,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: true
+  }
     // nextArrows: <SampleNextArrow />,
     // centeredSlides: false,
+    const settings2 = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay:true
   };
 
   return (
@@ -44,18 +52,34 @@ export default function MainPage() {
       </SliderCtn>
 
       <Layout>
-        <div>이 상품 어때요?</div>
-        <div className="imgFrame">
-          <img src="https://product-image.kurly.com/banner/random-band/pc/img/08eaf324-b1ce-4147-8d4a-a29d37336e63.jpg" />
+        {/* 두번 째  헤더 */}
+        <div>
+          이 상품 어때요?
         </div>
-        <div></div>
+      <Slider {...settings2}>
+          <div>
+            <img src="https://img-cf.kurly.com/cdn-cgi/image/width=400,format=auto/shop/data/goods/1655461236903l0.jpeg" />
+          </div>
+          <div>
+            <img src="https://img-cf.kurly.com/cdn-cgi/image/width=400,format=auto/shop/data/goods/1657867084115l0.jpg" />
+          </div>
+          <div>
+            <img src="https://img-cf.kurly.com/cdn-cgi/image/width=400,format=auto/shop/data/goods/160342712083l0.jpg" />
+          </div>
+          <div>
+            <img src="https://img-cf.kurly.com/cdn-cgi/image/width=400,format=auto/shop/data/goods/1651820195567l0.jpg" />
+          </div>
+        </Slider>
+        <div>
+          <img src="https://product-image.kurly.com/banner/random-band/pc/img/92aa1dca-7103-4fc3-9d2f-b6755ae43767.jpg"/>
+        </div>
+        <div>
+          MD의 추천
+        </div>
       </Layout>
     </>
   );
 }
-//저 조금만 쉬다올게요 ㅠㅠㅠㅠ흑 배곱하요... 넷 !!! 감챱니다
-//창을 줄이면 사진이 가운데 정렬이 아니게되네요 ㅠㅠ흑흑 하지만 이게 최선,,
-//Layout을 이아이만 적용 안시키려고 Layout 다른 페이지에 다 따로 입혔어요 ㅋㅋㅋ ㅠㅠ
 
 const SliderCtn = styled.div`
   width: 100%;
@@ -67,10 +91,15 @@ const SliderCtn = styled.div`
 
   div {
     width: 100%;
+    /* margin:0 auto; */
   }
 
   div img {
-    margin-left: calc(50vw - 50%);
+    /* margin-left: calc(50vw - 50%); */
+    width:1920px;
+    margin:0 auto;
+
     /* 창크기에 따라 위치 조정하는 거 하다 말았심~ */
   }
 `;
+

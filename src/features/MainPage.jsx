@@ -13,17 +13,17 @@ export default function MainPage() {
     speed: 600,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true
-  }
-    // nextArrows: <SampleNextArrow />,
-    // centeredSlides: false,
-    const settings2 = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay:true
+    autoplay: true,
+  };
+  // nextArrows: <SampleNextArrow />,
+  // centeredSlides: false,
+  const settings2 = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 2,
+    autoplay: true,
   };
 
   return (
@@ -53,10 +53,10 @@ export default function MainPage() {
 
       <Layout>
         {/* 두번 째  헤더 */}
-        <div>
-          이 상품 어때요?
-        </div>
-      <Slider {...settings2}>
+        <Recommend>
+          <div>이 상품 어때요?</div>
+        </Recommend>
+        <Slider {...settings2}>
           <div>
             <img src="https://img-cf.kurly.com/cdn-cgi/image/width=400,format=auto/shop/data/goods/1655461236903l0.jpeg" />
           </div>
@@ -64,18 +64,18 @@ export default function MainPage() {
             <img src="https://img-cf.kurly.com/cdn-cgi/image/width=400,format=auto/shop/data/goods/1657867084115l0.jpg" />
           </div>
           <div>
-            <img src="https://img-cf.kurly.com/cdn-cgi/image/width=400,format=auto/shop/data/goods/160342712083l0.jpg" />
+            <img src="https://img-cf.kurly.com/cdn-cgi/image/width=400,format=auto/shop/data/goods/1637922854753l0.jpeg" />
           </div>
           <div>
             <img src="https://img-cf.kurly.com/cdn-cgi/image/width=400,format=auto/shop/data/goods/1651820195567l0.jpg" />
           </div>
         </Slider>
-        <div>
-          <img src="https://product-image.kurly.com/banner/random-band/pc/img/92aa1dca-7103-4fc3-9d2f-b6755ae43767.jpg"/>
-        </div>
-        <div>
-          MD의 추천
-        </div>
+        <ThirdImage>
+          <img src="https://product-image.kurly.com/banner/random-band/pc/img/92aa1dca-7103-4fc3-9d2f-b6755ae43767.jpg" />
+        </ThirdImage>
+        <RecommendTwo>
+          <div>MD의 추천</div>
+        </RecommendTwo>
       </Layout>
     </>
   );
@@ -96,10 +96,35 @@ const SliderCtn = styled.div`
 
   div img {
     /* margin-left: calc(50vw - 50%); */
-    width:1920px;
-    margin:0 auto;
+    width: 1920px;
+    margin: 0 auto;
 
     /* 창크기에 따라 위치 조정하는 거 하다 말았심~ */
   }
 `;
 
+const Recommend = styled.div`
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 27px;
+  /* border: 1px solid black; */
+`;
+
+const ThirdImage = styled.div`
+  img {
+    width: 100%;
+  }
+`;
+
+const RecommendTwo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 27px;
+`;

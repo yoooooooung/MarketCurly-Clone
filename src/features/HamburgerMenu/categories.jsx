@@ -1,3 +1,5 @@
+import { AiOutlineMenu } from 'react-icons/ai';
+
 
 export const categories = [
     {

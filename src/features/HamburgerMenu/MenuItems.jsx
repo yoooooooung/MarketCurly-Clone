@@ -52,7 +52,7 @@ const MenuItems = ({ items, depthLevel }) => {
     >
       {items.url && items.subCtg ? (
         <>
-          <button className="buttons"
+          <button
             type="button"
             aria-haspopup="menu"
             aria-expanded={dropdown ? 'true' : 'false'}

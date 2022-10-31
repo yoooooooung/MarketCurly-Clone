@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Navbar from "../features/HamburgerMenu/Navbar";
+import Navbar from "../features/hamburgerMenu/Navbar";
+import { AiOutlineMenu } from 'react-icons/ai';
+
 
 export default function Header() {
   return (
@@ -39,10 +41,9 @@ export default function Header() {
         </Row2>
         <Row3>
           <Ctgs>
-            <a href="#">
-              <p>{/* 햄버거로고 */}</p>
-              <Navbar />
-            </a>
+            <p>
+            <AiOutlineMenu /> </p>
+            <Navbar />
           </Ctgs>
           <Menus>
             <Menu>신상품</Menu>
@@ -199,7 +200,13 @@ const Row2 = styled.div`
   }
 `;
 
-const Ctgs = styled.div``;
+const Ctgs = styled.div`
+display: flex;
+> p {
+  margin: 5px 2px 0px 0px;
+}
+`;
+
 const Ctg = styled.div``;
 const Bn = styled.div``;
 const Menus = styled.div``;

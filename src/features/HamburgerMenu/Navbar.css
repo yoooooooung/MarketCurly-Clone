@@ -106,7 +106,7 @@ button span {
 
 .dropdown {
    position: absolute;
-   right: 22%;
+   right: 10%;
    left: auto;
    /* margin-top: 8px; */
    box-shadow: 0 10px 15px -3px rgba(46, 41, 51, 0.08),
@@ -133,10 +133,10 @@ button span {
 }
 
 /* content */
-
+/* 
 .menu-items > .buttons {
 /* background-color: #cc3852; */
-}
+
 
 .content {
    max-width: 1200px;

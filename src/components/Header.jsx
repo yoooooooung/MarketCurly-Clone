@@ -1,14 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import Navbar from "../features/hamburgerMenu/Navbar";
-import { AiOutlineMenu } from 'react-icons/ai';
-
+import Navbar from "../features/HamburgerMenu/Navbar";
+import { AiOutlineMenu } from "react-icons/ai";
+import kurlyLogo from "../img/logo2.png";
 
 export default function Header() {
   return (
     <HeaderHeader>
-      {" "}
-      {/* 제일 넓은 친구  */}{" "}
+      {/* 제일 넓은 친구  */}
       <HeaderLayout>
         {/*  */}
         <Row1>
@@ -19,15 +18,12 @@ export default function Header() {
         <Row2>
           <Logo>
             <img
-              src={
-                "https://blog.kakaocdn.net/dn/bjjrHJ/btqBPXNC9tF/Sibyn4CJ4fWFTMaqvUYt01/img.jpg"
-              }
+              src={kurlyLogo}
               alt="마켓컬리"
+              onClick={() => window.location.replace("/")}
             />
-            {/* 이미지 경로 : https://blog.kakaocdn.net/dn/bjjrHJ/btqBPXNC9tF/Sibyn4CJ4fWFTMaqvUYt01/img.jpg */}
-            {/* 이미지 불러오기 설정 참고 블로그  https://velog.io/@rimo09/React-Create-react-app-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90%EC%84%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EA%B2%BD%EB%A1%9C%EB%A5%BC-%EC%84%A4%EC%A0%95%ED%95%98%EB%8A%94-4%EA%B0%80%EC%A7%80-%EB%B0%A9%EB%B2%95 */}
             <div>
-              <p>마켓컬리</p>
+              <p onClick={() => window.location.replace("/")}>마켓컬리</p>
               <p>|</p>
               <p>뷰티컬리</p>
             </div>
@@ -36,17 +32,22 @@ export default function Header() {
           <Icons>
             <button>{/* 위치 */}</button>
             <button>{/* 찜목록 */}</button>
-            <button>{/* 장바구니 */}</button>
+            <button onClick={() => window.location.replace("/cart")}>
+              {/* 장바구니 */}
+            </button>
           </Icons>
         </Row2>
         <Row3>
           <Ctgs>
             <p>
-            <AiOutlineMenu /> </p>
+              <AiOutlineMenu />{" "}
+            </p>
             <Navbar />
           </Ctgs>
           <Menus>
-            <Menu>신상품</Menu>
+            <Menu onClick={() => window.location.replace("/category")}>
+              신상품
+            </Menu>
             <Menu>베스트</Menu>
             <Menu>알뜰쇼핑</Menu>
             <Menu>특가/혜택</Menu>
@@ -148,6 +149,8 @@ const Row2 = styled.div`
     img {
       width: 90px;
       height: 60px;
+      object-fit: cover;
+      cursor: pointer;
     }
     div {
       font-size: 18px;
@@ -159,11 +162,13 @@ const Row2 = styled.div`
       p {
         color: purple;
         font-weight: 500;
+        cursor: pointer;
       }
       p:nth-child(2) {
         padding: 5px 0;
         font-size: 12px;
         color: lightgray;
+        cursor: default;
       }
       p:last-child {
         color: lightgray;
@@ -201,10 +206,10 @@ const Row2 = styled.div`
 `;
 
 const Ctgs = styled.div`
-display: flex;
-> p {
-  margin: 5px 2px 0px 0px;
-}
+  display: flex;
+  > p {
+    margin: 5px 2px 0px 0px;
+  }
 `;
 
 const Ctg = styled.div``;
@@ -265,16 +270,16 @@ const Row3 = styled.div`
     ${Menu} {
       font-size: 16px;
       font-weight: 500;
+      cursor: pointer;
     }
   }
 
   ${Bn} {
     color: purple;
     font-size: 13px;
-    height: 24px;
+    height: 28px;
     line-height: 22px;
     padding: 2px 16px;
-    margin-top: -3px;
     border: 0.5px solid lightgray;
     border-radius: 30px;
   }

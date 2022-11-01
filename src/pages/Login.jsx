@@ -1,18 +1,17 @@
 import axios from 'axios';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Layout from '../components/Layout';
-import swal from 'sweetalert';
 import { useNavigate } from 'react-router-dom';
-import { scryRenderedDOMComponentsWithTag } from 'react-dom/test-utils';
+import loginUser from '../redux/modules/userSlice'
+
 
 const Login = () => {
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const [loginId, setloginId] = useState('');
    const [password, setPassword] = useState('');
-   const [msg, setMsg] = useState();
 
    const onSubmitHandler = (e) => {
       e.preventDefault();
@@ -25,56 +24,31 @@ const Login = () => {
             loginId, password
          };
 
-         axios.post('http://15.164.250.6:3000/users/login', body)
+         axios.post('https://kyuudukk.shop/users/login', body)
          .then((response) => {
             console.log(response);
-            // if(response.data.code === 200) {
-            //    localStorage.setItem('token', response.data.token);
-            //    navigate("/");
-            // }
-            // if(response.data.code === 401) {
-            //    alert("다시 시도해주세요.");
-            // }
-         });
+            if(response.status === 200) {
+               localStorage.setItem('token', response.data.data.token);
+               // console.log(response.data.data.token)
+               localStorage.setItem('userName', response.data.data.userinfo.userName)
+               // console.log(response.data.data.userinfo.userName)
+               console.log(response.data.data.userinfo)
+               // dispatch(loginUser(response.data.data.userinfo))
+               navigate("/");
+               window.location.reload();
+            }
+         })
+         .catch((error) => {
+            // console.log(error);
+            if(error.response?.status === 401) {
+               alert('아이디 또는 비밀번호를 확인해주세요.')
+            } else {
+               alert('알 수 없는 오류가 발생했습니다.')
+            }
+         }) 
       }
    }
 
-   // async function loginUser(credentials) {
-   //    return fetch('http://13.125.49.96:3000/users/login', {
-   //       method: 'POST',
-   //       headers: {
-   //          'Content-Type': 'application/json'
-   //       },
-   //       body: JSON.stringify(credentials)
-   //    })
-   //    .then(data => data.json())
-   // }
-
-   // const [loginId, setloginId] = useState('');
-   // const [password, setPassword] = useState('');
-
-   // const onSubmitHandler = async e => {
-   //    e.preventDefault();
-   //    const response = await loginUser({
-   //       loginId,
-   //       password
-   //    });
-
-   //    if ('token' in response) {
-   //       swal("Success", response.message, "success", {
-   //          buttons: false,
-   //          timer: 2000,
-   //       })
-   //       .then((value) => {
-   //          localStorage.setItem('token', response['token']);
-   //          localStorage.setItem('user', JSON.stringify(response['user']));
-   //          window.location.href = "/";
-   //       })
-   //    } else {
-   //       swal("Failed", response.message, "error");
-   //    }
-   // }
-   // ;
 
    return (
       <Layout>

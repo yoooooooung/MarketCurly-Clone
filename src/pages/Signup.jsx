@@ -3,12 +3,25 @@ import styled from 'styled-components';
 import Layout from '../components/Layout';
 import { FiSearch } from 'react-icons/fi';
 import { BsCheckCircle } from 'react-icons/bs';
+import { AiFillCheckCircle } from 'react-icons/ai';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useForm } from 'react-hook-form';
 import { useRef } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
+   const navigate = useNavigate();
+   const checkId = () => {
+      alert('아직 구현 안 됨!');
+   };
+   const [isChecked, setIsChecked] = useState(false);
+   const toggle = () => {
+      setIsChecked(!isChecked);
+   };
+   console.log(isChecked);
+
    const {
       register,
       watch,
@@ -17,8 +30,29 @@ const Signup = () => {
    } = useForm();
    const password = useRef();
    password.current = watch('password');
-   const onSubmit = (data) => {
-      console.log('data', data);
+
+   const onSubmit = (body) => {
+      if (!isChecked) {
+         return alert('약관에 동의해주세요.');
+      }
+
+      const fullyAddress = fullAddress + body.address;
+      body.address = fullyAddress;
+      console.log(body);
+      axios
+         .post('https://kyuudukk.shop/users/signup', body)
+         .then((response) => {
+            console.log(response);
+            if (response.status === 201) {
+               navigate('/login');
+            }
+         })
+         .catch((error) => {
+            const errorMsg = error.response.data.message;
+            if (error.response?.status === 401) {
+               alert(errorMsg);
+            }
+         });
    };
 
    const open = useDaumPostcodePopup();
@@ -63,22 +97,29 @@ const Signup = () => {
                   </InputTitle>
                   <InputForm>
                      <InputBox
-                        type='id'
-                        name='id'
-                        {...register('id', {
+                        type='text'
+                        name='loginId'
+                        {...register('loginId', {
                            required: true,
-                           minLength: 4,
+                           // minLength: 4,
+                           pattern: /^[A-za-z0-9]{6,15}$/,
                         })}
                         placeholder='아이디를 입력해주세요'
+                        autoComplete='off'
                      />
-                     {errors.id && errors.id.type === 'required' && (
+                     {errors.loginId && errors.loginId.type === 'required' && (
                         <p>아이디를 입력해주세요.</p>
                      )}
-                     {errors.id && errors.id.type === 'minLength' && (
+                     {/* {errors.loginId && errors.loginId.type === 'minLength' && (
                         <p>4글자 이상의 아이디를 입력해주세요.</p>
+                     )} */}
+                     {errors.loginId && errors.loginId.type === 'pattern' && (
+                        <p> 5~10글자 사이의 영문 또는 숫자만 입력 가능합니다</p>
                      )}
                   </InputForm>
-                  <ConfirmBtn>중복확인</ConfirmBtn>
+                  <ConfirmBtn type='button' onClick={checkId}>
+                     중복확인
+                  </ConfirmBtn>
                </InputDiv>
                <InputDiv>
                   <InputTitle>
@@ -91,18 +132,24 @@ const Signup = () => {
                         type='password'
                         {...register('password', {
                            required: true,
-                           minLength: 5,
+                           // minLength: 5,
+                           pattern: /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{6,20}$/,
                         })}
                         placeholder='비밀번호를 입력해주세요'
                      />
                      {errors.password &&
                         errors.password.type === 'required' && (
-                           <p>비밀번호를 입력해주세요.</p>
+                           <p>비밀번호를 입력해주세요</p>
                         )}
-                     {errors.password &&
+                     {/* {errors.password &&
                         errors.password.type === 'minLength' && (
                            <p>비밀번호를 다섯 글자 이상 입력해주세요.</p>
-                        )}
+                        )} */}
+                     {errors.password && errors.password.type === 'pattern' && (
+                        <p>
+                           영문과 숫자 조합의 6글자 이상 비밀번호를 입력해주세요
+                        </p>
+                     )}
                   </InputForm>
                </InputDiv>
                <InputDiv>
@@ -112,21 +159,21 @@ const Signup = () => {
                   </InputTitle>
                   <InputForm>
                      <InputBox
-                        name='password_confirm'
+                        name='confirmPassword'
                         type='password'
-                        {...register('password_confirm', {
+                        {...register('confirmPassword', {
                            required: true,
                            validate: (value) => value === password.current,
                         })}
                         placeholder='비밀번호를 한번 더 입력해주세요'
                      />
-                     {errors.password_confirm &&
-                        errors.password_confirm.type === 'required' && (
-                           <p>다시 한번 비밀번호를 입력해주세요.</p>
+                     {errors.confirmPassword &&
+                        errors.confirmPassword.type === 'required' && (
+                           <p>다시 한번 비밀번호를 입력해주세요</p>
                         )}
-                     {errors.password_confirm &&
-                        errors.password_confirm.type === 'validate' && (
-                           <p>비밀번호가 일치하지 않습니다.</p>
+                     {errors.confirmPassword &&
+                        errors.confirmPassword.type === 'validate' && (
+                           <p>비밀번호가 일치하지 않습니다</p>
                         )}
                   </InputForm>
                </InputDiv>
@@ -137,14 +184,19 @@ const Signup = () => {
                   </InputTitle>
                   <InputForm>
                      <InputBox
-                        type='name'
-                        name='name'
-                        {...register('name', { required: true, minLength: 1 })}
+                        type='text'
+                        name='userName'
+                        {...register('userName', {
+                           required: true,
+                           minLength: 1,
+                        })}
                         placeholder='이름을 입력해주세요'
+                        autoComplete='off'
                      />
-                     {errors.name && errors.name.type === 'required' && (
-                        <p>이름을 입력해주세요.</p>
-                     )}
+                     {errors.userName &&
+                        errors.userName.type === 'required' && (
+                           <p>이름을 입력해주세요</p>
+                        )}
                   </InputForm>
                </InputDiv>
                <InputDiv style={{ marginBottom: '0px' }}>
@@ -169,13 +221,14 @@ const Signup = () => {
                      ) : null} */}
                      <AddressConfirm>{fullAddress}</AddressConfirm>
                      <AddressInput
-                        type='address'
+                        type='text'
                         name='address'
                         {...register('address', { required: true })}
                         placeholder='상세 주소를 입력해주세요'
+                        autoComplete='off'
                      />
                      {errors.address && errors.address.type === 'required' && (
-                        <p>상세 주소를 입력해주세요.</p>
+                        <p>상세 주소를 입력해주세요</p>
                      )}
                   </AdressBox>
                </InputDiv>
@@ -193,21 +246,40 @@ const Signup = () => {
                      <span style={{ color: 'red' }}>*</span>
                   </Agree>
                   <AgreeAll>
-                     <BsCheckCircle size={'20px'} style={{ color: 'gray' }} />
+                     {isChecked ? (
+                        <>
+                           <button
+                              type='button'
+                              style={{ background: 'none', border: 'none', marginTop: '-10px' }}>
+                              <AiFillCheckCircle
+                                 size={'20px'}
+                                 style={{ color: 'gray' }}
+                                 onClick={toggle}
+                              />
+                           </button>
+                        </>
+                     ) : (
+                        <>
+                           <button
+                              type='button'
+                              style={{ background: 'none', border: 'none', marginTop: '-10px' }}>
+                              <BsCheckCircle
+                                 size={'20px'}
+                                 style={{ color: 'gray' }}
+                                 onClick={toggle}
+                              />
+                           </button>
+                        </>
+                     )}
                   </AgreeAll>
                   <div>
-                     <div>
-                        <span style={{ fontSize: '18px', fontWeight: '500' }}>
-                           전체 동의합니다.
+                        <span style={{ fontSize: '15px' }}>
+                           개인정보 수집·이용 동의
+                           {' '}
+                           <span style={{ color: 'gray' }}>(필수)</span>
                         </span>
-                        <div>
-                           <span style={{ fontSize: '12px', color: 'gray' }}>
-                              선택항목에 동의하지 않은 경우도 회원가입 및
-                              일반적인 서비스를 이용할 수 있습니다.
-                           </span>
-                        </div>
-                     </div>
                   </div>
+                  <ViewTerm> 약관보기 &gt; </ViewTerm>
                </AgreeBox>
                <ButtonArea>
                   <SignUpBtn>가입하기</SignUpBtn>
@@ -267,9 +339,14 @@ const InputBox = styled.input`
    border: 0.5px solid gray;
    vertical-align: middle;
    margin: 10px 10px 10px 0px;
+   padding-left: 10px;
+
+   :focus {
+      outline: 1px solid black;
+   }
 
    ::placeholder {
-      font-size: medium;
+      font-size: 14px;
       padding-left: 10px;
    }
 `;
@@ -281,6 +358,7 @@ const ConfirmBtn = styled.button`
    border: 1.2px solid purple;
    background-color: transparent;
    color: purple;
+   cursor: pointer;
 `;
 
 const AddressBtn = styled.button`
@@ -292,6 +370,7 @@ const AddressBtn = styled.button`
    color: purple;
    font-size: 15px;
    font-weight: 500;
+   cursor: pointer;
 `;
 
 const AgreeBox = styled.div`
@@ -336,7 +415,7 @@ const InputForm = styled.div`
 
 const AddressConfirm = styled.div`
    background-color: #bab7b7;
-   height: 45px;
+   min-height: 45px;
    width: 330px;
    margin: 10px 0px 5px 0px;
    border-radius: 5px;
@@ -348,14 +427,19 @@ const AdressBox = styled.div`
 `;
 
 const AddressInput = styled.input`
-height: 45px;
-width: 330px;
-border-radius: 5px;
-border: 0.5px solid gray;
-::placeholder {
+   height: 45px;
+   width: 330px;
+   border-radius: 5px;
+   border: 0.5px solid gray;
+   margin: 10px 10px 10px 0px;
+   padding-left: 10px;
+   :focus {
+      outline: 1px solid black;
+   }
+   ::placeholder {
       font-size: medium;
       padding-left: 10px;
-}
+   }
 `;
 
 const AddressTitle = styled.div`
@@ -365,3 +449,10 @@ const AddressTitle = styled.div`
    font-size: 14px;
    font-weight: 500;
 `;
+
+const ViewTerm = styled.div`
+   font-size: 14px;
+   color: purple;
+   margin-left: 190px;
+   cursor: pointer;
+`

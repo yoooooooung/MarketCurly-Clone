@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../features/HamburgerMenu/Navbar";
 import kurlyLogo from "../img/logo2.png";
@@ -17,9 +18,13 @@ export default function Header() {
         </Row1>
         <Row2>
           <Logo>
-            <img src={kurlyLogo} alt="마켓컬리" />
+            <img
+              src={kurlyLogo}
+              alt="마켓컬리"
+              onClick={() => window.location.replace("/")}
+            />
             <div>
-              <p>마켓컬리</p>
+              <p onClick={() => window.location.replace("/")}>마켓컬리</p>
               <p>|</p>
               <p>뷰티컬리</p>
             </div>
@@ -28,7 +33,9 @@ export default function Header() {
           <Icons>
             <button>{/* 위치 */}</button>
             <button>{/* 찜목록 */}</button>
-            <button>{/* 장바구니 */}</button>
+            <button onClick={() => window.location.replace("/cart")}>
+              {/* 장바구니 */}
+            </button>
           </Icons>
         </Row2>
         <Row3>
@@ -39,7 +46,9 @@ export default function Header() {
             </a>
           </Ctgs>
           <Menus>
-            <Menu>신상품</Menu>
+            <Menu onClick={() => window.location.replace("/category")}>
+              신상품
+            </Menu>
             <Menu>베스트</Menu>
             <Menu>알뜰쇼핑</Menu>
             <Menu>특가/혜택</Menu>
@@ -142,6 +151,7 @@ const Row2 = styled.div`
       width: 90px;
       height: 60px;
       object-fit: cover;
+      cursor: pointer;
     }
     div {
       font-size: 18px;
@@ -153,11 +163,13 @@ const Row2 = styled.div`
       p {
         color: purple;
         font-weight: 500;
+        cursor: pointer;
       }
       p:nth-child(2) {
         padding: 5px 0;
         font-size: 12px;
         color: lightgray;
+        cursor: default;
       }
       p:last-child {
         color: lightgray;
@@ -253,6 +265,7 @@ const Row3 = styled.div`
     ${Menu} {
       font-size: 16px;
       font-weight: 500;
+      cursor: pointer;
     }
   }
 

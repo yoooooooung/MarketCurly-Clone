@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Navbar from "../features/HamburgerMenu/Navbar";
+import kurlyLogo from "../img/logo2.png";
 
 export default function Header() {
   return (
@@ -16,14 +17,7 @@ export default function Header() {
         </Row1>
         <Row2>
           <Logo>
-            <img
-              src={
-                "https://blog.kakaocdn.net/dn/bjjrHJ/btqBPXNC9tF/Sibyn4CJ4fWFTMaqvUYt01/img.jpg"
-              }
-              alt="마켓컬리"
-            />
-            {/* 이미지 경로 : https://blog.kakaocdn.net/dn/bjjrHJ/btqBPXNC9tF/Sibyn4CJ4fWFTMaqvUYt01/img.jpg */}
-            {/* 이미지 불러오기 설정 참고 블로그  https://velog.io/@rimo09/React-Create-react-app-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90%EC%84%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EA%B2%BD%EB%A1%9C%EB%A5%BC-%EC%84%A4%EC%A0%95%ED%95%98%EB%8A%94-4%EA%B0%80%EC%A7%80-%EB%B0%A9%EB%B2%95 */}
+            <img src={kurlyLogo} alt="마켓컬리" />
             <div>
               <p>마켓컬리</p>
               <p>|</p>
@@ -147,6 +141,7 @@ const Row2 = styled.div`
     img {
       width: 90px;
       height: 60px;
+      object-fit: cover;
     }
     div {
       font-size: 18px;
@@ -264,10 +259,9 @@ const Row3 = styled.div`
   ${Bn} {
     color: purple;
     font-size: 13px;
-    height: 24px;
+    height: 28px;
     line-height: 22px;
     padding: 2px 16px;
-    margin-top: -3px;
     border: 0.5px solid lightgray;
     border-radius: 30px;
   }

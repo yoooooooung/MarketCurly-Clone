@@ -3,17 +3,49 @@ import styled from "styled-components";
 import Navbar from "../features/HamburgerMenu/Navbar";
 import { AiOutlineMenu } from "react-icons/ai";
 import kurlyLogo from "../img/logo2.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const userName = localStorage.getItem("userName");
+  const logout = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
   return (
     <HeaderHeader>
       {/* 제일 넓은 친구  */}
       <HeaderLayout>
         {/*  */}
         <Row1>
-          <div>회원가입</div>
-          <div>로그인</div>
-          <div>고객센터</div>
+          {!userName ? (
+            <>
+              <DivTwo>
+                <a href="/signup">회원가입</a>
+              </DivTwo>
+              <DivTwo>
+                <a href="/login">로그인</a>
+              </DivTwo>
+              <div>고객센터</div>
+            </>
+          ) : (
+            <>
+              <StatusBox>
+                <center>일반</center>
+              </StatusBox>
+              <Div>{userName}&nbsp;님</Div>
+              {/* <DropDown>
+                        <DropBtn>{loginId}님</DropBtn>
+                        <DropContent>
+                          <button onClick={logout} style={{ cursor: 'pointer' }}>로그아웃</button>
+                        </DropContent>
+                     </DropDown> */}
+              <Div>고객센터</Div>
+              <div onClick={logout} style={{ cursor: "pointer" }}>
+                로그아웃
+              </div>
+            </>
+          )}
         </Row1>
         <Row2>
           <Logo>
@@ -40,7 +72,7 @@ export default function Header() {
         <Row3>
           <Ctgs>
             <p>
-              <AiOutlineMenu />{" "}
+              <AiOutlineMenu />
             </p>
             <Navbar />
           </Ctgs>
@@ -53,7 +85,7 @@ export default function Header() {
             <Menu>특가/혜택</Menu>
           </Menus>
           <Bn>
-            샛별 · 낮 <span style={{ color: "gray" }}>배송안내</span>
+            샛별·낮 &nbsp; <span style={{ color: "gray" }}>배송안내</span>
           </Bn>
         </Row3>
       </HeaderLayout>
@@ -72,20 +104,41 @@ const HeaderLayout = styled.div`
   margin: 0 auto;
 `;
 
+const Div = styled.div``;
+const DivTwo = styled.div``;
+
 const Row1 = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding: 2px 0;
-  div {
+  padding: 5px 0;
+
+  ${Div} {
+    border-right: 1px solid lightgray;
+  }
+
+  ${DivTwo} {
     font-size: 12px;
-    height: 12px;
-    line-height: 12px;
     border-right: 1px solid lightgray;
     padding-right: 10px;
   }
+  div {
+    font-size: 12px;
+    /* height: 12px; */
+    /* line-height: 12px; */
+    /* border-right: 1px solid lightgray; */
+    padding-right: 10px;
+
+    a {
+      text-decoration: none;
+    }
+  }
   div:first-child {
     color: purple;
+  }
+
+  div:last-child {
+    border-right: none;
   }
 `;
 
@@ -286,4 +339,40 @@ const Row3 = styled.div`
 
   ${Ctgs} {
   }
+`;
+
+const StatusBox = styled.div`
+  /* background-color: blue; */
+  width: 50px;
+  margin-right: 5px;
+  padding-left: 12px;
+  padding-right: none;
+  border-radius: 10px;
+  border: 1px solid purple;
+`;
+
+const DropBtn = styled.button`
+  background-color: transparent;
+  border: none;
+`;
+const DropDown = styled.div`
+  display: inline-block;
+
+  :hover {
+  }
+`;
+
+const DropContent = styled.div`
+  display: none;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+
+  a {
+    color: black;
+    display: block;
+  }
+
+  a:hover {
+    background-color: #f1f1f1;
+  }
+  //
 `;

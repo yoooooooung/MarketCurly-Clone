@@ -1,6 +1,7 @@
 // 초기 상태값
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+
 
 const initialState = {
   matjip: [],

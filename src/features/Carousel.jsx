@@ -5,8 +5,7 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import { useState } from "react";
 import MenuIcon from "./MenuIcon";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { __getGoodsVege } from "../redux/modules/vegeSlice";
 
 const Carousel = ({ goodsItems }) => {
@@ -14,14 +13,24 @@ const Carousel = ({ goodsItems }) => {
   const [clickMenu, setClickMenu] = useState("all");
   console.log(goodsItems);
   const cate = ["vege", "fruit", "sea", "meat"];
+  const { isLoading, error, goods } = useSelector(
+    (state) => state.mainpageSlice
+  );
 
-  // console.log(cate[clickMenu]);
+  // const settings = {
+  //   dots: false,
+  //   infinite: true,
+  //   speed: 500,
+  //   slidesToShow: 4,
+  //   slidesToScroll: 1,
+  //   autoplay: true,
+  // };
 
   const settings = {
     dots: false,
     infinite: true,
-    speed: 500,
-    slidesToShow: 4,
+    speed: 600,
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
   };
@@ -109,18 +118,35 @@ const Carousel = ({ goodsItems }) => {
         </li>
       </ul>
       <CarouselStyle {...settings}>
-        {goodsItems.map((goodsItems) => (
-          <div>
-            <div key={goodsItems.goodsId}>
-              <img src={goodsItems.goodsImage} />
-              <div className="goodsname">{goodsItems.goodsName}</div>
-              <div className="pricename">
-                {goodsItems.price}
-                {"원"}
+        {goodsItems.length == 0 ? (
+          <>
+            {goods.map((goods) => (
+              // <div>
+              <div key={goods.goodsId}>
+                <img src={goods.goodsImage} />
+                <div className="goodsname">{goods.goodsName}</div>
+                <div className="pricename">
+                  {goods.price}
+                  {"원"}
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+              // </div>
+            ))}
+          </>
+        ) : (
+          <>
+            {goodsItems.map((goodsItems) => (
+              <div key={goodsItems.goodsId}>
+                <img src={goodsItems.goodsImage} />
+                <div className="goodsname">{goodsItems.goodsName}</div>
+                <div className="pricename">
+                  {goodsItems.price}
+                  {"원"}
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </CarouselStyle>
     </InnerWrap>
   );

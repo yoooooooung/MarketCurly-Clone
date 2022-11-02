@@ -1,13 +1,60 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 export default function RightList() {
+  const token = localStorage.getItem("token");
+  const [checkItems, setCheckItems] = useState([]);
+
+  const orderAlert = (a) => {
+    Swal.fire({
+      title: "주문하시겠습니까?",
+      confirmButtonColor: "#7a2295",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //컨펌시 해당 카트 아이디 모두 다 지우고
+        a.map((b) => {
+          axios.delete(`https://kyuudukk.shop/carts/${b.cartsId}`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          });
+        });
+        // 알람창 띄우기
+        Swal.fire({
+          title: "주문 완료 !",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+    });
+  };
+
+  const handleSingleCheck = (checked, id) => {
+    if (checked) {
+      setCheckItems([...checkItems, id]);
+    } else {
+      // 체크 해제
+      setCheckItems(checkItems.filter((el) => el !== id));
+    }
+  };
+
+  const onClickDeleteButtonHandler = (a) => {
+    axios.delete(`https://kyuudukk.shop/carts/${a}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
   return (
     <div>
       <Right>
         <Info>
           <span>배송지</span>
-          <Place>부산 해운대구 좌동순환로 433번길 30 어쩌고 저쩌고</Place>
+          <Place>{localStorage.getItem("address")}</Place>
           <p>
             <span>샛별배송</span> 18~22시 낮배송
           </p>
@@ -50,7 +97,7 @@ export default function RightList() {
           </p>
         </Amount>
         <Bt>
-          <Order>주문하기</Order>
+          <Order onClick={() => orderAlert()}>주문하기</Order>
           <ul>
             <li>· [주문완료] 상태일 경우에만 주문 취소 가능합니다.</li>
             <li>
@@ -198,4 +245,5 @@ const Order = styled.button`
   border: 0 none;
   font-size: 16px;
   font-weight: 500;
+  cursor: pointer;
 `;

@@ -21,7 +21,7 @@ export default function MainPage() {
   );
 
   const { goodsItem } = useSelector((state) => state.vegeSlice);
-  console.log(goodsItem);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -190,15 +190,6 @@ const InnerWrap = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-// const Title = styled.div`
-//   margin-bottom: 50px;
-//   height: 50xp;
-//   p {
-//     font-size: 28px;
-//     font-weight: bold;
-//   }
-// `;
 
 //,점 찎기
 //.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")

@@ -9,6 +9,7 @@ export default function LeftList() {
   const [qty, setQty] = useState(1);
   const [cart, setCart] = useState([]);
   const token = localStorage.getItem("token");
+  const [forRender, setForRender] = useState([]);
 
   console.log("localStorage", localStorage);
   console.log("token값", token);
@@ -35,6 +36,15 @@ export default function LeftList() {
     newistGet();
   }, []);
 
+  const onClickDeleteButtonHandler = (a) => {
+    axios.delete(`https://kyuudukk.shop/carts/${a}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    setForRender([]);
+  };
+
   const amountHandler = (abc, value) => {
     // e.preventDefault();
     // onChangeAmount(this.cartsId, "quantity", this.quantity + 1);
@@ -53,12 +63,51 @@ export default function LeftList() {
     );
   };
 
+  //체크박스 전체선택 및 부분 선택 핸들러 ------------------------------------ 체크박스
+  const [checkItems, setCheckItems] = useState([]);
+  const handleSingleCheck = (checked, id) => {
+    if (checked) {
+      setCheckItems([...checkItems, id]);
+    } else {
+      // 체크 해제
+      setCheckItems(checkItems.filter((el) => el !== id));
+    }
+  };
+  // 체크박스 전체 선택
+  const handleAllCheck = (checked) => {
+    if (checked) {
+      const idArray = [];
+      // 전체 체크 박스가 체크 되면 cartsId를 가진 모든 elements를 idArray배열에 넣어주고, 전체 체크 박스 체크
+      cart.forEach((el) => idArray.push(el.cartsId));
+      setCheckItems(idArray);
+      console.log("idArray :", idArray);
+    }
+
+    // 반대의 경우 전체 체크 박스 체크 삭제
+    else {
+      setCheckItems([]);
+    }
+  };
+
+  console.log("checkItems :", checkItems);
+  console.log("cart.length :", cart.length);
+
+  const handleChange = (e) => {
+    setCheckItems([]);
+  };
+
   return (
     <div>
       <Left>
         <Row1>
           <label>
-            <input type="checkbox" />
+            <input
+              name="checkAll"
+              type="checkbox"
+              //체크박스 전체 선택
+              onChange={(e) => handleAllCheck(e.target.checked)}
+              checked={checkItems.length == cart.length ? true : false}
+            />
             <span>전체선택</span>
           </label>
           <p></p>
@@ -93,7 +142,15 @@ export default function LeftList() {
               {cart?.map((abc) => (
                 <li key={abc.cartsId}>
                   <label>
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      //체크박스 부분선택
+                      onChange={(e) =>
+                        handleSingleCheck(e.target.checked, abc.cartsId)
+                      }
+                      // checkItems에 data.id가 있으면 체크 아니면 체크 해제
+                      checked={checkItems.includes(abc.cartsId) ? true : false}
+                    />
                     <span></span>
                   </label>
                   <Img>
@@ -118,41 +175,21 @@ export default function LeftList() {
                     )}
                     원
                   </Price>
-                  <Del>✖</Del>
+                  <Del onClick={() => onClickDeleteButtonHandler(abc.cartsId)}>
+                    ✖
+                  </Del>
                 </li>
               ))}
-              <li>
-                <label>
-                  <input type="checkbox" />
-                  <span></span>
-                </label>
-                <Img>
-                  <img src={require(`../../img/cart_ex1.png`)} />
-                </Img>
-                <Name>
-                  <p>상품이름</p>
-                  <p>상품설명</p>
-                </Name>
-                <Qty>
-                  <button
-                    onClick={() => setQty(qty - 1)}
-                    disabled={qty === 1}
-                  ></button>
-                  <div>{qty}</div>
-                  <button onClick={() => setQty(qty + 1)}></button>
-                </Qty>
-                <Price>qty * Price원</Price>
-                <Del>✖</Del>
-              </li>
-              <li>상품1</li>
-              <li>상품2</li>
-              <li>상품3</li>
             </Products>
           ) : null}
         </Row2>
         <Row1>
           <label>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              onChange={(e) => handleAllCheck(e.target.checked)}
+              checked={checkItems.length == cart.length ? true : false}
+            />
             <span>전체선택</span>
           </label>
           <p></p>
@@ -371,4 +408,5 @@ const Del = styled.div`
   margin: 24px 0;
   text-align: center;
   color: #999;
+  cursor: pointer;
 `;

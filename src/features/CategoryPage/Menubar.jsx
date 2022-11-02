@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { __getGoodsVege } from "../../redux/modules/vegeSlice";
 
 const Menubar = () => {
   const [toggle, setToggle] = useState(true);
@@ -8,11 +11,22 @@ const Menubar = () => {
   const [catTwo, setCatTwo] = useState([]);
   const [catThree, setCatThree] = useState([]);
   const [catFour, setCatFour] = useState([]);
+  const { goodsItem } = useSelector((state) => state.vegeSlice);
   const categories = [
-    { name: "국·메인·반찬요리", total: catOne.length, index: 1 },
-    { name: "과일·견과·쌀", total: catTwo.length, index: 2 },
-    { name: "수산·해산·건어물", total: catThree.length, index: 3 },
-    { name: "채소", total: catFour.length, index: 4 },
+    {
+      name: "국·메인·반찬요리",
+      total: catOne.length,
+      index: 1,
+      source: "meat",
+    },
+    { name: "과일·견과·쌀", total: catTwo.length, index: 2, source: "fruit" },
+    {
+      name: "수산·해산·건어물",
+      total: catThree.length,
+      index: 3,
+      source: "sea",
+    },
+    { name: "채소", total: catFour.length, index: 4, source: "vege" },
     { name: "샐러드·간편식", total: 100, index: 5 },
     { name: "간식·과자·떡", total: 71, index: 6 },
     { name: "생활용품·리빙·캠핑", total: 71, index: 7 },
@@ -25,9 +39,49 @@ const Menubar = () => {
   //수산물 = 수산·해산·건어물
   //채소 = 채소
 
+  const dispatch = useDispatch();
+
   const clickToggle = () => {
     setToggle((prev) => !prev);
   };
+
+  const checkHandler = (checked, v) => {
+    if (checked) {
+      dispatch(__getGoodsVege(v));
+    }
+    // else {__delelteGoods();}
+  };
+
+  //블로그 복붙해보는중 ------------------------------------ 체크박스
+  const [checkItems, setCheckItems] = useState([]);
+  const handleSingleCheck = (checked, id) => {
+    if (checked) {
+      setCheckItems([...checkItems, id]);
+    } else {
+      // 체크 해제
+      setCheckItems(checkItems.filter((el) => el !== id));
+    }
+  };
+  // 체크박스 전체 선택
+  const handleAllCheck = (checked) => {
+    if (checked) {
+      console.log("wow");
+      const idArray = [];
+      // 전체 체크 박스가 체크 되면 id를 가진 모든 elements를 배열에 넣어주어서,
+      // 전체 체크 박스 체크
+      goodsItem.forEach((el) => idArray.push(el.id));
+      setCheckItems(idArray);
+    }
+
+    // 반대의 경우 전체 체크 박스 체크 삭제
+    else {
+      setCheckItems([]);
+    }
+  };
+  const handleChange = (e) => {
+    setCheckItems([]);
+  };
+
   return (
     <MenubarLayout>
       <Filter>
@@ -60,8 +114,6 @@ const Menubar = () => {
       </Filter>
       <Menus>
         <ListTitle>
-          {/* <div>카테고리</div>
-          <img /> */}
           <button onClick={clickToggle}>
             <div>카테고리</div>
             <p>
@@ -85,24 +137,31 @@ const Menubar = () => {
             {categories.map((abc) => (
               <li key={abc.index}>
                 <a href="#">
-                  <label>
-                    <input type="checkbox" />
+                  <label
+                  // onClick={() => {
+                  //   // dispatch(__getGoodsVege(abc.source));
+                  //   checkHandler();
+                  // }}
+                  >
+                    <input
+                      type="checkbox"
+                      // onChange={(e) =>
+                      //   handleSingleCheck(e.target.checked, data.id)
+                      // }
+                      checked={
+                        checkItems.length === goodsItem.length ? true : false
+                      }
+                      onClick={() => {
+                        dispatch(__getGoodsVege(abc.source));
+                        // checkHandler(event.currentTarget.checked, abc.source);
+                      }}
+                    />
                     <span>{abc.name}</span>
                     <span>{abc.total}</span>
                   </label>
                 </a>
               </li>
             ))}
-            {/* <li>
-              <a href="#">
-                <label>
-                  <input type="checkbox" />
-                  <span>국·메인·반찬요리</span>
-                  <span>121</span>
-                </label>
-              </a>
-            </li> */}
-
             <More>카테고리 더보기 &gt;</More>
           </Lists>
         ) : null}
@@ -115,8 +174,6 @@ export default Menubar;
 
 const MenubarLayout = styled.div`
   height: 569px;
-  /* background-color: pink; */
-
   button {
     cursor: pointer;
     font-size: 14px;
@@ -172,7 +229,6 @@ const Menus = styled.div`
     line-height: 20px;
     font-weight: 500;
     padding: 16px 0;
-    /* background-color: yellow; */
     width: 100%;
 
     & > button {
@@ -219,7 +275,6 @@ const Lists = styled.ul`
     color: inherit;
   }
   label {
-    /* background-color: blue; */
     display: inline-flex;
     font-size: 14px;
     line-height: 26px;

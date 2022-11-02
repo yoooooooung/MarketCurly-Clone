@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const userName = localStorage.getItem("userName");
+  console.log(localStorage.getItem("token"));
   const logout = () => {
     localStorage.clear();
     window.location.reload();

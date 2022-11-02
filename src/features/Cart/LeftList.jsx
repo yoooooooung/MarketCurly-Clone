@@ -1,15 +1,56 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import axios from "axios";
 import { useState } from "react";
+import { useEffect } from "react";
 
 export default function LeftList() {
   const [toggle, setToggle] = useState(true);
   const [qty, setQty] = useState(1);
-  // if (qty = 1) {};
+  const [cart, setCart] = useState([]);
+  const token = localStorage.getItem("token");
+
+  console.log("localStorage", localStorage);
+  console.log("token값", token);
 
   const clickToggle = () => {
     setToggle((prev) => !prev);
+  };
+
+  const newistGet = async () => {
+    try {
+      const { data } = await axios.get("https://kyuudukk.shop/carts/list", {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("data두번", data.data);
+      return setCart(data.data);
+    } catch (error) {
+      return alert(error);
+    }
+  };
+
+  useEffect(() => {
+    newistGet();
+  }, []);
+
+  const amountHandler = (abc, value) => {
+    // e.preventDefault();
+    // onChangeAmount(this.cartsId, "quantity", this.quantity + 1);
+    onChangeAmount(abc.cartsId, "quantity", abc.quantity + value);
+  };
+
+  const onChangeAmount = (id, key, value) => {
+    console.log("id값", id);
+    console.log("key값", key);
+    console.log("value값", value);
+
+    setCart(
+      cart.map((ccc) =>
+        ccc.cartsId == id ? { ...ccc, [key]: value } : { ...ccc }
+      )
+    );
   };
 
   return (
@@ -49,6 +90,37 @@ export default function LeftList() {
           </Title>
           {toggle ? (
             <Products>
+              {cart?.map((abc) => (
+                <li key={abc.cartsId}>
+                  <label>
+                    <input type="checkbox" />
+                    <span></span>
+                  </label>
+                  <Img>
+                    <img src={abc.Good.goodsImage} />
+                  </Img>
+                  <Name>
+                    <p>{abc.Good.goodsName}</p>
+                    <p>{abc.Good.delivery}</p>
+                  </Name>
+                  <Qty>
+                    <button
+                      onClick={() => amountHandler(abc, -1)}
+                      disabled={abc.quantity === 1}
+                    ></button>
+                    <div>{abc.quantity}</div>
+                    <button onClick={() => amountHandler(abc, 1)}></button>
+                  </Qty>
+                  <Price>
+                    {/* 금액에 점찍기 */}
+                    {Number(abc.quantity * abc.Good.price).toLocaleString(
+                      "ko-KR"
+                    )}
+                    원
+                  </Price>
+                  <Del>✖</Del>
+                </li>
+              ))}
               <li>
                 <label>
                   <input type="checkbox" />
@@ -280,6 +352,9 @@ const Qty = styled.div`
     }
     &:last-child {
       background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAzMCAzMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0xNiAxMHY0aDR2MmgtNHY0aC0ydi00aC00di0yaDR2LTRoMnoiIGZpbGw9IiMzMzMiIGZpbGwtcnVsZT0ibm9uemVybyIvPgo8L3N2Zz4K);
+    }
+    &:disabled {
+      background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAzMCAzMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0yMCAxNHYySDEwdi0yeiIgZmlsbD0iI0RERCIgZmlsbC1ydWxlPSJub256ZXJvIi8+Cjwvc3ZnPgo=);
     }
   }
 `;

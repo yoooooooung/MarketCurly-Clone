@@ -4,7 +4,26 @@ import { useState } from "react";
 
 const Menubar = () => {
   const [toggle, setToggle] = useState(true);
-  // if (qty = 1) {};
+  const [catOne, setCatOne] = useState([]);
+  const [catTwo, setCatTwo] = useState([]);
+  const [catThree, setCatThree] = useState([]);
+  const [catFour, setCatFour] = useState([]);
+  const categories = [
+    { name: "국·메인·반찬요리", total: catOne.length, index: 1 },
+    { name: "과일·견과·쌀", total: catTwo.length, index: 2 },
+    { name: "수산·해산·건어물", total: catThree.length, index: 3 },
+    { name: "채소", total: catFour.length, index: 4 },
+    { name: "샐러드·간편식", total: 100, index: 5 },
+    { name: "간식·과자·떡", total: 71, index: 6 },
+    { name: "생활용품·리빙·캠핑", total: 71, index: 7 },
+    { name: "베이비·키즈·완구", total: 65, index: 8 },
+    { name: "면·양념·오일", total: 48, index: 9 },
+    { name: "생수·음료·우유·커피", total: 44, index: 10 },
+  ];
+  //정육 = 국·메인·반찬요리
+  //과일 = 과일·견과·쌀
+  //수산물 = 수산·해산·건어물
+  //채소 = 채소
 
   const clickToggle = () => {
     setToggle((prev) => !prev);
@@ -24,16 +43,16 @@ const Menubar = () => {
             <path
               d="M13.78 3.96303C12.504 2.16973 10.4086 1 8.04 1C4.15192 1 1 4.15192 1 8.04C1 11.9281 4.15192 15.08 8.04 15.08C11.9281 15.08 15.08 11.9281 15.08 8.04"
               stroke="#ddd"
-              stroke-width="1.6"
-              stroke-linecap="square"
-              stroke-linejoin="round"
+              strokeWidth="1.6"
+              strokeLinecap="square"
+              strokeLinejoin="round"
             ></path>
             <path
               d="M14.4933 1L14.4933 4.52H10.9733"
               stroke="#ddd"
-              stroke-width="1.6"
-              stroke-linecap="square"
-              stroke-linejoin="round"
+              strokeWidth="1.6"
+              strokeLinecap="square"
+              strokeLinejoin="round"
             ></path>
           </svg>
           <span>초기화</span>
@@ -63,7 +82,18 @@ const Menubar = () => {
         </ListTitle>
         {toggle ? (
           <Lists>
-            <li>
+            {categories.map((abc) => (
+              <li key={abc.index}>
+                <a href="#">
+                  <label>
+                    <input type="checkbox" />
+                    <span>{abc.name}</span>
+                    <span>{abc.total}</span>
+                  </label>
+                </a>
+              </li>
+            ))}
+            {/* <li>
               <a href="#">
                 <label>
                   <input type="checkbox" />
@@ -71,34 +101,8 @@ const Menubar = () => {
                   <span>121</span>
                 </label>
               </a>
-            </li>
-            <li>
-              <a href="#">
-                <label>
-                  <input type="checkbox" />
-                  <span>샐러드·간편식</span>
-                  <span>100</span>
-                </label>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <label>
-                  <input type="checkbox" />
-                  <span>간식·과자·떡</span>
-                  <span>71</span>
-                </label>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <label>
-                  <input type="checkbox" />
-                  <span>생활용품·리빙·캠핑</span>
-                  <span>70</span>
-                </label>
-              </a>
-            </li>
+            </li> */}
+
             <More>카테고리 더보기 &gt;</More>
           </Lists>
         ) : null}
@@ -251,9 +255,9 @@ const Lists = styled.ul`
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE3Ni4wMDAwMDAsIC0xMDkwLjAwMDAwMCkgdHJhbnNsYXRlKDEwMC4wMDAwMDAsIDkzNi4wMDAwMDApIHRyYW5zbGF0ZSg2MC4wMDAwMDAsIDE0Mi4wMDAwMDApIHRyYW5zbGF0ZSgxNi4wMDAwMDAsIDEyLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMiIgZmlsbD0iIzVGMDA4MCIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjUiIGQ9Ik03IDEyLjY2N0wxMC4zODUgMTYgMTggOC41Ii8+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K);
   }
 
-  li > a > button {
+  /* li > a > button {
     margin-right: 10px;
-  }
+  } */
 
   ${More} {
     width: 220px;

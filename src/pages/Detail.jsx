@@ -1,31 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Layout from '../components/Layout';
 import { BiShareAlt } from 'react-icons/bi';
 import { FiHeart } from 'react-icons/fi';
 import { SlBell } from 'react-icons/sl';
+import GetReivew from '../features/review/GetReview';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getDetails } from '../redux/modules/detailSlice';
+import { useParams } from 'react-router-dom';
 
 const Detail = () => {
+   const id = useParams();
    const userName = localStorage.getItem('userName');
+   const dispatch = useDispatch();
+   const { isLoading, error, detail } = useSelector((state) => state.detail);
+   const [qty, setQty] = useState(1);
+
+   useEffect(() => {
+      dispatch(__getDetails(id.goodsId));
+   }, [dispatch]);
+
+   if (isLoading) {
+      return <div>로딩 중....</div>;
+   }
+
+   if (error) {
+      return <div>{error.message}</div>;
+   }
 
    return (
       <Layout>
          <UpperWrapper>
-            <ImgDiv>사진430*552</ImgDiv>
+            <Img src={detail.goodsImage} />
             <GoodsInfo>
                <div>
-                  <SpanGray>샛별배송(delivery)</SpanGray>
+                  <SpanGray>{detail.delivery}</SpanGray>
                </div>
                <div>
                   <GoodsName>
-                     상품명(goodsName){' '}
+                     {detail.goodsName}
                      <ShareBtn type='button'>
                         <BiShareAlt />
                      </ShareBtn>
                   </GoodsName>
                </div>
                <div>
-                  <GoodsPrice>12,900</GoodsPrice>
+                  <GoodsPrice>
+                     {Number(detail.price).toLocaleString('ko-KR')}
+                  </GoodsPrice>
                   <span>원</span>
                   <div style={{ marginTop: '10px' }}>
                      {!userName ? (
@@ -34,7 +56,8 @@ const Detail = () => {
                         </span>
                      ) : (
                         <span>
-                           <SpanGray>일반 0.1% | </SpanGray>개당 ?원 적립
+                           <SpanGray>일반 0.1% | </SpanGray>개당{' '}
+                           {detail.price * 0.001}원 적립
                         </span>
                      )}
                   </div>
@@ -58,24 +81,47 @@ const Detail = () => {
                   </GoodsSecondInfo>
                   <GoodsSecondInfo>
                      <Subject>중량/용량</Subject>
-                     <Content>(weight)</Content>
+                     <Content>{detail.weight}</Content>
                   </GoodsSecondInfo>
                   <GoodsSecondInfo>
                      <Subject>원산지</Subject>
-                     <Content>(from)</Content>
+                     <Content>{detail.from}</Content>
                   </GoodsSecondInfo>
                   <GoodsSecondInfo>
                      <Subject>상품선택</Subject>
                      <Qtybox>
-                        <div>(상품 이름)</div>
+                        <div>{detail.goodsName}</div>
                         <div style={{ display: 'flex' }}>
                            <Count>
-                              <div>-</div>
-                              <div>0</div>
-                              <div>+</div>
+                              {qty === 0 ? (
+                                 <button
+                                    disabled
+                                    onClick={() => {
+                                       setQty(qty - 1);
+                                    }}>
+                                    -
+                                 </button>
+                              ) : (
+                                 <button
+                                    onClick={() => {
+                                       setQty(qty - 1);
+                                    }}>
+                                    -
+                                 </button>
+                              )}
+
+                              <div>{qty}</div>
+                              <button
+                                 onClick={() => {
+                                    setQty(qty + 1);
+                                 }}>
+                                 +
+                              </button>
                            </Count>
                            <Cost>
-                              <b>(가격)</b>
+                              <b>
+                                 {Number(detail.price).toLocaleString('ko-KR')}
+                              </b>
                            </Cost>
                         </div>
                      </Qtybox>
@@ -84,7 +130,7 @@ const Detail = () => {
                      <div>
                         <span>총 상품금액: </span>
                         <span style={{ fontSize: '30px', fontWeight: '600' }}>
-                           12,900
+                           {Number(detail.price * qty).toLocaleString('ko-KR')}
                         </span>{' '}
                         <span>원</span>
                      </div>
@@ -115,6 +161,13 @@ const Detail = () => {
                </UpperInner>
             </GoodsInfo>
          </UpperWrapper>
+         <Menubar>
+            <div>상품설명</div>
+            <div>후기</div>
+         </Menubar>
+         <BigImg src={detail.goodsImage} />
+         <NameFeild>{detail.goodsName}</NameFeild>
+         <GetReivew />
       </Layout>
    );
 };
@@ -127,11 +180,17 @@ const UpperWrapper = styled.div`
    margin-top: 30px;
 `;
 
-const ImgDiv = styled.div`
+
+const Img = styled.img`
    width: 430px;
    height: 552px;
-   background-color: aliceblue;
 `;
+
+const BigImg = styled.img`
+   transform: rotate(90deg);
+   width: 810px;
+   margin-left: 120px;
+`
 
 const GoodsName = styled.div`
    justify-content: space-between;
@@ -236,6 +295,14 @@ const Count = styled.div`
    padding: 0px 10px 0px 10px;
    font-size: 17px;
    font-weight: 400;
+
+   button {
+      font-size: 20px;
+      background-color: transparent;
+      border: none;
+      margin-top: -5px;
+      cursor: pointer;
+   }
 `;
 
 const Cost = styled.div`
@@ -306,3 +373,36 @@ const Btns = styled.div`
       font-weight: 500;
    }
 `;
+
+const Menubar = styled.div`
+   background-color: #ececec;
+   display: flex;
+   height: 60px;
+
+   div {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 500;
+      color: gray;
+      border: 0.5px solid #bebebe;
+   }
+
+   div:first-child{
+      background-color: #fff;
+      border-bottom: none;
+      color: purple;
+   }
+`;
+
+const NameFeild = styled.div`
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 35px;
+   font-weight: 600;
+   color: gray;
+   margin-top: -100px;
+   margin-bottom: 60px;
+`

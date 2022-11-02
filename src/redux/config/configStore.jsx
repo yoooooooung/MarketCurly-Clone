@@ -2,6 +2,8 @@
 // // import { combineReducers } from "redux";
 import slice from "../modules/slice";
 import { configureStore } from "@reduxjs/toolkit";
+import mainpageSlice from "../modules/mainpageSlice";
+import vegeSlice from "../modules/vegeSlice";
 
 // const rootReducer = combineReducers({
 //   //리듀서 이름넣기
@@ -11,6 +13,8 @@ import { configureStore } from "@reduxjs/toolkit";
 const store = configureStore({
   reducer: {
     slice: slice,
+    mainpageSlice: mainpageSlice,
+    vegeSlice: vegeSlice,
   },
 });
 

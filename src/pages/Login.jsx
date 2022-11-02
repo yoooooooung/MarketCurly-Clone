@@ -4,8 +4,9 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
-import loginUser from '../redux/modules/userSlice'
-
+import loginUser from '../redux/modules/userSlice';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
    const navigate = useNavigate();
@@ -16,39 +17,71 @@ const Login = () => {
    const onSubmitHandler = (e) => {
       e.preventDefault();
       if (!loginId) {
-         return alert("아이디를 입력하세요");
+         return Swal.fire({
+            text: '아이디를 입력하세요',
+            width: '300px',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#7a2295',
+            showClass: { popup: 'animated fadeInDown faster' },
+            hideClass: { popup: 'animated fadeOutUp faster' },
+         });
       } else if (!password) {
-         return alert("비밀번호를 입력하세요");
+         return Swal.fire({
+            text: '비밀번호를 입력하세요',
+            width: '300px',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#7a2295',
+            showClass: { popup: 'animated fadeInDown faster' },
+            hideClass: { popup: 'animated fadeOutUp faster' },
+         });
       } else {
          let body = {
-            loginId, password
+            loginId,
+            password,
          };
 
-         axios.post('https://kyuudukk.shop/users/login', body)
-         .then((response) => {
-            console.log(response);
-            if(response.status === 200) {
-               localStorage.setItem('token', response.data.data.token);
-               // console.log(response.data.data.token)
-               localStorage.setItem('userName', response.data.data.userinfo.userName)
-               // console.log(response.data.data.userinfo.userName)
-               console.log(response.data.data.userinfo)
-               // dispatch(loginUser(response.data.data.userinfo))
-               navigate("/");
-               window.location.reload();
-            }
-         })
-         .catch((error) => {
-            // console.log(error);
-            if(error.response?.status === 401) {
-               alert('아이디 또는 비밀번호를 확인해주세요.')
-            } else {
-               alert('알 수 없는 오류가 발생했습니다.')
-            }
-         }) 
+         axios
+            .post('https://kyuudukk.shop/users/login', body)
+            .then((response) => {
+               console.log(response);
+               if (response.status === 200) {
+                  localStorage.setItem('token', response.data.data.token);
+                  // console.log(response.data.data.token)
+                  localStorage.setItem(
+                     'userName',
+                     response.data.data.userinfo.userName
+                  );
+                  // console.log(response.data.data.userinfo.userName)
+                  console.log(response.data.data.userinfo);
+                  // dispatch(loginUser(response.data.data.userinfo))
+                  navigate('/');
+                  window.location.reload();
+               }
+            })
+            .catch((error) => {
+               // console.log(error);
+               if (error.response?.status === 400) {
+                  Swal.fire({
+                     text: '아이디 또는 비밀번호를 확인해주세요',
+                     width: 'auto',
+                     confirmButtonText: '확인',
+                     confirmButtonColor: '#7a2295',
+                     showClass: { popup: 'animated fadeInDown faster' },
+                     hideClass: { popup: 'animated fadeOutUp faster' },
+                  });
+               } else {
+                  Swal.fire({
+                     text: '알 수 없는 오류가 발생했습니다',
+                     width: 'auto',
+                     confirmButtonText: '확인',
+                     confirmButtonColor: '#7a2295',
+                     showClass: { popup: 'animated fadeInDown faster' },
+                     hideClass: { popup: 'animated fadeOutUp faster' },
+                  });
+               }
+            });
       }
-   }
-
+   };
 
    return (
       <Layout>
@@ -74,7 +107,7 @@ const Login = () => {
                />
                <FindUserInfo>아이디 찾기 | 비밀번호 찾기</FindUserInfo>
                <LoginBtn type='submit'>로그인</LoginBtn>
-               <SignupBtn>회원가입</SignupBtn>
+               <Link style={{textDecoration: 'none'}} to="/signup"><SignupBtn type='button'>회원가입</SignupBtn></Link>
             </form>
          </Wrapper>
       </Layout>

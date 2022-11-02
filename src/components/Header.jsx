@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Navbar from "../features/HamburgerMenu/Navbar";
+import Navbar from "../features/hamburgerMenu/Navbar";
 import { AiOutlineMenu } from "react-icons/ai";
 import kurlyLogo from "../img/logo2.png";
 import { useNavigate } from "react-router-dom";
@@ -85,7 +85,7 @@ export default function Header() {
             <Menu>특가/혜택</Menu>
           </Menus>
           <Bn>
-            샛별·낮 &nbsp; <span style={{ color: "gray" }}>배송안내</span>
+<b>샛별·낮</b> &nbsp; <span style={{ color: "gray" }}>배송안내</span>
           </Bn>
         </Row3>
       </HeaderLayout>

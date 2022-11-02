@@ -10,49 +10,101 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const Signup = () => {
    const navigate = useNavigate();
-   const checkId = () => {
-      alert('아직 구현 안 됨!');
-   };
+
+   //아이디 중복확인 선체크
+   const [isIdChecked, setIsIdChecked] = useState(false);
+   //이용약관 확인 체크 및 토글 기능
    const [isChecked, setIsChecked] = useState(false);
    const toggle = () => {
       setIsChecked(!isChecked);
    };
-   console.log(isChecked);
 
    const {
       register,
       watch,
       handleSubmit,
+      getValues,
       formState: { errors },
    } = useForm();
    const password = useRef();
    password.current = watch('password');
 
-   const onSubmit = (body) => {
-      if (!isChecked) {
-         return alert('약관에 동의해주세요.');
-      }
-
-      const fullyAddress = fullAddress + body.address;
-      body.address = fullyAddress;
-      console.log(body);
+   const checkId = () => {
+      const loginId = getValues('loginId');
+      let body = {loginId};
       axios
-         .post('https://kyuudukk.shop/users/signup', body)
+         .post('https://kyuudukk.shop/users/check/', body)
          .then((response) => {
-            console.log(response);
-            if (response.status === 201) {
-               navigate('/login');
-            }
+            if (response.status === 200 ) {
+               Swal.fire({
+                  text: '사용 가능한 아이디입니다',
+                  width: '300px',
+                  confirmButtonText: '확인',
+                  confirmButtonColor: '#7a2295',
+                  showClass: { popup: 'animated fadeInDown faster' },
+                  hideClass: { popup: 'animated fadeOutUp faster' },
+               });
+               setIsIdChecked(true);
+            } 
          })
          .catch((error) => {
-            const errorMsg = error.response.data.message;
-            if (error.response?.status === 401) {
-               alert(errorMsg);
+            // const errorMsg = error.response.data.message;
+            if (error.response?.status === 400) {
+               Swal.fire({
+                  text: '이미 사용 중인 아이디입니다',
+                  width: '300px',
+                  confirmButtonText: '확인',
+                  confirmButtonColor: '#7a2295',
+                  showClass: { popup: 'animated fadeInDown faster' },
+                  hideClass: { popup: 'animated fadeOutUp faster' },
+               });
             }
          });
+   };
+
+   const onSubmit = (body) => {
+      if (!isChecked) {
+         return Swal.fire({
+            text: '약관에 동의해주세요',
+            width: '300px',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#7a2295',
+            showClass: { popup: 'animated fadeInDown faster' },
+            hideClass: { popup: 'animated fadeOutUp faster' },
+         });
+
+      }
+      if (isIdChecked) {
+         const fullyAddress = fullAddress + body.address;
+         body.address = fullyAddress;
+         axios
+            .post('https://kyuudukk.shop/users/signup', body)
+            .then((response) => {
+               console.log(response);
+               if (response.status === 201) {
+                  navigate('/login');
+               }
+            })
+            .catch((error) => {
+               const errorMsg = error.response.data.message;
+               if (error.response?.status === 400) {
+                  alert(errorMsg);
+               }
+            });
+      } else {
+         return Swal.fire({
+            text: '아이디 중복확인을 해주세요',
+            width: '300px',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#7a2295',
+            showClass: { popup: 'animated fadeInDown faster' },
+            hideClass: { popup: 'animated fadeOutUp faster' },
+         });
+      }
    };
 
    const open = useDaumPostcodePopup();
@@ -77,6 +129,7 @@ const Signup = () => {
       setFullAddress(fullAddress);
    };
 
+   // 주소검색 onClickHandler
    const handleClick = () => {
       open({ onComplete: handleComplete });
    };
@@ -99,10 +152,11 @@ const Signup = () => {
                      <InputBox
                         type='text'
                         name='loginId'
+                        // ref={inputLoginId}
                         {...register('loginId', {
                            required: true,
                            // minLength: 4,
-                           pattern: /^[A-za-z0-9]{6,15}$/,
+                           pattern: /^[A-za-z0-9]{6,12}$/,
                         })}
                         placeholder='아이디를 입력해주세요'
                         autoComplete='off'
@@ -114,7 +168,7 @@ const Signup = () => {
                         <p>4글자 이상의 아이디를 입력해주세요.</p>
                      )} */}
                      {errors.loginId && errors.loginId.type === 'pattern' && (
-                        <p> 5~10글자 사이의 영문 또는 숫자만 입력 가능합니다</p>
+                        <p> 6~12글자 사이의 영문 또는 숫자만 입력 가능합니다</p>
                      )}
                   </InputForm>
                   <ConfirmBtn type='button' onClick={checkId}>
@@ -250,7 +304,11 @@ const Signup = () => {
                         <>
                            <button
                               type='button'
-                              style={{ background: 'none', border: 'none', marginTop: '-10px' }}>
+                              style={{
+                                 background: 'none',
+                                 border: 'none',
+                                 marginTop: '-10px',
+                              }}>
                               <AiFillCheckCircle
                                  size={'20px'}
                                  style={{ color: 'gray' }}
@@ -262,7 +320,11 @@ const Signup = () => {
                         <>
                            <button
                               type='button'
-                              style={{ background: 'none', border: 'none', marginTop: '-10px' }}>
+                              style={{
+                                 background: 'none',
+                                 border: 'none',
+                                 marginTop: '-10px',
+                              }}>
                               <BsCheckCircle
                                  size={'20px'}
                                  style={{ color: 'gray' }}
@@ -273,11 +335,10 @@ const Signup = () => {
                      )}
                   </AgreeAll>
                   <div>
-                        <span style={{ fontSize: '15px' }}>
-                           개인정보 수집·이용 동의
-                           {' '}
-                           <span style={{ color: 'gray' }}>(필수)</span>
-                        </span>
+                     <span style={{ fontSize: '15px' }}>
+                        개인정보 수집·이용 동의{' '}
+                        <span style={{ color: 'gray' }}>(필수)</span>
+                     </span>
                   </div>
                   <ViewTerm> 약관보기 &gt; </ViewTerm>
                </AgreeBox>
@@ -411,6 +472,10 @@ const SignUpBtn = styled.button`
 
 const InputForm = styled.div`
    flex-direction: column;
+
+   p {
+      margin-top: -10px;
+   }
 `;
 
 const AddressConfirm = styled.div`
@@ -455,4 +520,4 @@ const ViewTerm = styled.div`
    color: purple;
    margin-left: 190px;
    cursor: pointer;
-`
+`;

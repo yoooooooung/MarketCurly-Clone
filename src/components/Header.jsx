@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Navbar from "../features/hamburgerMenu/Navbar";
-import { AiOutlineMenu } from 'react-icons/ai';
-
+import Navbar from "../features/HamburgerMenu/Navbar";
+import { AiOutlineMenu } from "react-icons/ai";
 
 export default function Header() {
   return (
@@ -42,7 +41,8 @@ export default function Header() {
         <Row3>
           <Ctgs>
             <p>
-            <AiOutlineMenu /> </p>
+              <AiOutlineMenu />{" "}
+            </p>
             <Navbar />
           </Ctgs>
           <Menus>
@@ -201,10 +201,10 @@ const Row2 = styled.div`
 `;
 
 const Ctgs = styled.div`
-display: flex;
-> p {
-  margin: 5px 2px 0px 0px;
-}
+  display: flex;
+  > p {
+    margin: 5px 2px 0px 0px;
+  }
 `;
 
 const Ctg = styled.div``;

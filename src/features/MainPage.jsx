@@ -14,11 +14,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { __getGoods } from "../redux/modules/mainpageSlice";
 import { __getGoodsVege } from "../redux/modules/vegeSlice";
-import { useCallback } from "react";
-import clickResult from "./Carousel";
+
 export default function MainPage() {
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState(clickResult));
   const { isLoading, error, goods } = useSelector(
     (state) => state.mainpageSlice
   );

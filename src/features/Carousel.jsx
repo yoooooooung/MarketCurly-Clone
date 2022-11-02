@@ -14,7 +14,6 @@ const Carousel = ({ goodsItems }) => {
   const [clickMenu, setClickMenu] = useState("all");
   console.log(goodsItems);
   const cate = ["vege", "fruit", "sea", "meat"];
-  const clickResult = cate[clickMenu];
 
   // console.log(cate[clickMenu]);
 

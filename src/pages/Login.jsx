@@ -5,6 +5,8 @@ import styled from "styled-components";
 import Layout from "../components/Layout";
 import { useNavigate } from "react-router-dom";
 import loginUser from "../redux/modules/userSlice";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,9 +17,23 @@ const Login = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (!loginId) {
-      return alert("아이디를 입력하세요");
+      return Swal.fire({
+        text: "아이디를 입력하세요",
+        width: "300px",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#7a2295",
+        showClass: { popup: "animated fadeInDown faster" },
+        hideClass: { popup: "animated fadeOutUp faster" },
+      });
     } else if (!password) {
-      return alert("비밀번호를 입력하세요");
+      return Swal.fire({
+        text: "비밀번호를 입력하세요",
+        width: "300px",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#7a2295",
+        showClass: { popup: "animated fadeInDown faster" },
+        hideClass: { popup: "animated fadeOutUp faster" },
+      });
     } else {
       let body = {
         loginId,
@@ -36,11 +52,6 @@ const Login = () => {
               response.data.data.userinfo.userName
             );
             // console.log(response.data.data.userinfo.userName)
-            // 아래줄 진영이 추가 (address 받아야해서)
-            localStorage.setItem(
-              "address",
-              response.data.data.userinfo.address
-            );
             console.log(response.data.data.userinfo);
             // dispatch(loginUser(response.data.data.userinfo))
             navigate("/");
@@ -49,10 +60,24 @@ const Login = () => {
         })
         .catch((error) => {
           // console.log(error);
-          if (error.response?.status === 401) {
-            alert("아이디 또는 비밀번호를 확인해주세요.");
+          if (error.response?.status === 400) {
+            Swal.fire({
+              text: "아이디 또는 비밀번호를 확인해주세요",
+              width: "auto",
+              confirmButtonText: "확인",
+              confirmButtonColor: "#7a2295",
+              showClass: { popup: "animated fadeInDown faster" },
+              hideClass: { popup: "animated fadeOutUp faster" },
+            });
           } else {
-            alert("알 수 없는 오류가 발생했습니다.");
+            Swal.fire({
+              text: "알 수 없는 오류가 발생했습니다",
+              width: "auto",
+              confirmButtonText: "확인",
+              confirmButtonColor: "#7a2295",
+              showClass: { popup: "animated fadeInDown faster" },
+              hideClass: { popup: "animated fadeOutUp faster" },
+            });
           }
         });
     }
@@ -82,7 +107,9 @@ const Login = () => {
           />
           <FindUserInfo>아이디 찾기 | 비밀번호 찾기</FindUserInfo>
           <LoginBtn type="submit">로그인</LoginBtn>
-          <SignupBtn>회원가입</SignupBtn>
+          <Link style={{ textDecoration: "none" }} to="/signup">
+            <SignupBtn type="button">회원가입</SignupBtn>
+          </Link>
         </form>
       </Wrapper>
     </Layout>

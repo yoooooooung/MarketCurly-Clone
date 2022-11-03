@@ -26,9 +26,10 @@ const Detail = () => {
   });
 
   useEffect(() => {
-    dispatch(__getDetails(id.goodsId));
+    dispatch(__getDetails(Number(id.goodsId)));
   }, [dispatch]);
 
+  console.log("id값", id);
   if (isLoading) {
     return <Loading />;
   }
@@ -39,7 +40,7 @@ const Detail = () => {
 
   const token = localStorage.getItem("token");
   const onSubmitHandler = (toCart) => {
-    axios.post(`https://kyuudukk.shop/carts/${id}`, toCart, {
+    axios.post(`https://kyuudukk.shop/carts/${id.goodsId}`, toCart, {
       headers: {
         authorization: `Bearer ${token}`,
       },

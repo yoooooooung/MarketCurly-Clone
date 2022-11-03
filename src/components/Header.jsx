@@ -240,7 +240,7 @@ const Row2 = styled.div`
     height: 46px;
     padding: 0 10px;
     border-radius: 5px;
-    border: 0.5px solid purple;
+    border: 2px solid purple;
     background-color: white;
     margin: 6px 180px 0 60px;
 

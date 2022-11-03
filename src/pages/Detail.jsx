@@ -39,7 +39,7 @@ const Detail = () => {
 
   const token = localStorage.getItem("token");
   const onSubmitHandler = (toCart) => {
-    axios.post(`https://kyuudukk.shop/carts/${id.goodsId}`, toCart, {
+    axios.post(`https://kyuudukk.shop/carts/${id}`, toCart, {
       headers: {
         authorization: `Bearer ${token}`,
       },

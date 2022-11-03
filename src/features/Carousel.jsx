@@ -17,15 +17,6 @@ const Carousel = ({ goodsItems }) => {
     (state) => state.mainpageSlice
   );
 
-  // const settings = {
-  //   dots: false,
-  //   infinite: true,
-  //   speed: 500,
-  //   slidesToShow: 4,
-  //   slidesToScroll: 1,
-  //   autoplay: true,
-  // };
-
   const settings = {
     dots: false,
     infinite: true,

@@ -5,8 +5,10 @@ import Swal from "sweetalert2";
 
 export default function RightList({ totalDevide, checkItems }) {
   const token = localStorage.getItem("token");
+  const location = localStorage.getItem("address");
   // const [checkItems, setCheckItems] = useState([]);
-
+  console.log(location);
+  console.log(localStorage);
   const orderAlert = async (a) => {
     await Swal.fire({
       title: "주문하시겠습니까?",
@@ -56,7 +58,7 @@ export default function RightList({ totalDevide, checkItems }) {
       <Right>
         <Info>
           <span>배송지</span>
-          <Place>{localStorage.getItem("address")}</Place>
+          <Place>{location}</Place>
           <p>
             <span>샛별배송</span> 18~22시 낮배송
           </p>

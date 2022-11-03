@@ -51,8 +51,12 @@ const Login = () => {
               "userName",
               response.data.data.userinfo.userName
             );
+            localStorage.setItem(
+              "address",
+              response.data.data.userinfo.address
+            );
             // console.log(response.data.data.userinfo.userName)
-            console.log(response.data.data.userinfo);
+            console.log("response로 들어오는 값", response.data.data);
             // dispatch(loginUser(response.data.data.userinfo))
             navigate("/");
             window.location.reload();

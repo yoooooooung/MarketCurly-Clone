@@ -123,8 +123,8 @@ export default function LeftList() {
             />
             <span>전체선택</span>
           </label>
-          <p></p>
-          {/* <button>선택삭제</button> */}
+          {/* <p></p>
+          <button>선택삭제</button> */}
         </Row1>
         <Row2>
           <Title>
@@ -232,8 +232,8 @@ export default function LeftList() {
             />
             <span>전체선택</span>
           </label>
-          <p></p>
-          <button>선택삭제</button>
+          {/* <p></p>
+          <button>선택삭제</button> */}
         </Row1>
       </Left>
       <RightList totalDevide={totalDevide} checkItems={checkItems} />
@@ -462,7 +462,6 @@ const Empty = styled.div`
   padding: 120px 0;
   text-align: center;
   color: lightgray;
-  border-top: 1px solid black;
   border-bottom: 1px solid lightgray;
 `;
 

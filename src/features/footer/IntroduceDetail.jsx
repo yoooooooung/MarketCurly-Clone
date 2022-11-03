@@ -14,7 +14,7 @@ export default function IntroduceDetail() {
         <MoreText> 사업자정보 확인</MoreText>
       </DetailText>
       <DetailText>
-        통신판매업: 제 2018-서울강남-01456호 | 개인정보보호책임자 : 김미래
+        통신판매업: 제 백2현18-서울강남-01456호 | 개인정보보호책임자 : 김미래
       </DetailText>
       <DetailText>
         주소: 서울특별시 강남구 테헤란로 133, 18층(역삼동) | 대표이사 : 이상현

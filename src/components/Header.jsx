@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import Navbar from "../features/HamburgerMenu/Navbar";
+import Navbar from "../features/hamburgerMenu/Navbar";
 import { AiOutlineMenu } from "react-icons/ai";
 import kurlyLogo from "../img/logo2.png";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const userName = localStorage.getItem("userName");
-  console.log(localStorage.getItem("token"));
+
   const logout = () => {
     localStorage.clear();
     window.location.reload();

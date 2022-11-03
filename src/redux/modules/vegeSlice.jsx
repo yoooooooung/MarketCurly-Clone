@@ -11,7 +11,7 @@ export const __getGoodsVege = createAsyncThunk(
       const { data } = await axios.get(
         `https://kyuudukk.shop/goods/${payload}`
       );
-      console.log(data);
+
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

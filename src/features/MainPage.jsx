@@ -14,6 +14,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { __getGoods } from "../redux/modules/mainpageSlice";
 import { __getGoodsVege } from "../redux/modules/vegeSlice";
+import { Link } from "react-router-dom";
 
 export default function MainPage() {
   const { isLoading, error, goods } = useSelector(
@@ -54,30 +55,6 @@ export default function MainPage() {
     autoplay: true,
   };
 
-  // const itemList = [
-  //   "채소",
-  //   "과일∙견과∙쌀",
-  //   "수산∙해산∙건어물",
-  //   "정육∙계란",
-  //   "국∙반찬∙메인요리",
-  //   "샐러드∙간편식",
-  //   "면∙양념∙오일",
-  //   "생수∙음료∙우유∙커피",
-  //   "간식∙과자∙떡",
-  //   "베이커리∙치즈∙델리",
-  //   "건강식품",
-  //   "와인",
-  //   "전통주",
-  //   "생활용품∙리빙∙캠핑",
-  //   "스킨케어∙메이크업",
-  //   "헤어∙바디∙구강",
-  //   "주방용품",
-  //   "가전제품",
-  //   "선물하기",
-  //   "반려동물",
-  //   "베이지∙키즈∙완구",
-  // ];
-
   return (
     <>
       <Slider {...settings}>
@@ -109,7 +86,9 @@ export default function MainPage() {
           <Slider {...settings2}>
             {goods.map((abc) => (
               <div key={abc.goodsId}>
-                <img src={abc.goodsImage} />
+                <Link to={`detail/${abc.goodsId}`}>
+                  <img src={abc.goodsImage} />
+                </Link>
                 <div className="goodsname">{abc.goodsName}</div>
                 <div className="pricename">
                   {Number(abc.price).toLocaleString("kr")}

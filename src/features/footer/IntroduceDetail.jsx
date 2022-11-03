@@ -1,5 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import instagram from "../image/ico_instagram.png";
+import facebook from "../image/ico_fb.png";
+import youtube from "../image/ico_youtube.png";
+import marketkurly from "../image/ico_naverpost.png";
+import marketkurlyTwo from "../image/ico_blog.png";
 
 export default function IntroduceDetail() {
   return (
@@ -27,22 +32,22 @@ export default function IntroduceDetail() {
       <DetailText>대량주문 문의: hanghe99@nave.com</DetailText>
 
       <a href="https://www.instagram.com/marketkurly/" target="_blank">
-        <Img src="./image/ico_instagram.png"></Img>
+        <Img src={instagram}></Img>
       </a>
       <a href="https://www.facebook.com/marketkurly" target="_blank">
-        <Img src="./image/ico_fb.png"></Img>
+        <Img src={facebook}></Img>
       </a>
       <a href="https://blog.naver.com/marketkurly" target="_blank">
-        <Img src="./image/ico_blog.png"></Img>
+        <Img src={marketkurly}></Img>
       </a>
       <a href="https://m.post.naver.com/marketkurly" target="_blank">
-        <Img src="./image/ico_naverpost.png"></Img>
+        <Img src={marketkurlyTwo}></Img>
       </a>
       <a
         href="https://www.youtube.com/channel/UCfpdjL5pl-1qKT7Xp4UQzQg"
         target="_blank"
       >
-        <Img src="./image/ico_youtube.png"></Img>
+        <Img src={youtube}></Img>
       </a>
     </Detail>
   );
@@ -51,7 +56,7 @@ export default function IntroduceDetail() {
 const Detail = styled.div``;
 const DetailText = styled.p`
   margin-top: 5px;
-  /* color: var(--gray-color); */
+
   color: gray;
   font-size: 12px;
 `;

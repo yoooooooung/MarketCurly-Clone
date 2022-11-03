@@ -7,11 +7,11 @@ import { useState } from "react";
 import MenuIcon from "./MenuIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { __getGoodsVege } from "../redux/modules/vegeSlice";
+import { Link } from "react-router-dom";
 
 const Carousel = ({ goodsItems }) => {
   const dispatch = useDispatch();
   const [clickMenu, setClickMenu] = useState("all");
-  console.log(goodsItems);
   const cate = ["vege", "fruit", "sea", "meat"];
   const { isLoading, error, goods } = useSelector(
     (state) => state.mainpageSlice
@@ -120,31 +120,37 @@ const Carousel = ({ goodsItems }) => {
       <CarouselStyle {...settings}>
         {goodsItems.length == 0 ? (
           <>
-            {goods.map((goods) => (
-              // <div>
-              <div key={goods.goodsId}>
-                <img src={goods.goodsImage} />
-                <div className="goodsname">{goods.goodsName}</div>
-                <div className="pricename">
-                  {goods.price}
-                  {"원"}
-                </div>
-              </div>
-              // </div>
-            ))}
+            <BigDiv>
+              {goods.map((goods) => (
+                <DIV key={goods.goodsId}>
+                  <Link to={`detail/${goods.goodsId}`}>
+                    <img src={goods.goodsImage} />
+                  </Link>
+                  <div className="goodsname">{goods.goodsName}</div>
+                  <div className="pricename">
+                    {Number(goods.price).toLocaleString("kr")}
+                    {"원"}
+                  </div>
+                </DIV>
+              ))}
+            </BigDiv>
           </>
         ) : (
           <>
-            {goodsItems.map((goodsItems) => (
-              <div key={goodsItems.goodsId}>
-                <img src={goodsItems.goodsImage} />
-                <div className="goodsname">{goodsItems.goodsName}</div>
-                <div className="pricename">
-                  {goodsItems.price}
-                  {"원"}
-                </div>
-              </div>
-            ))}
+            <BigDiv>
+              {goodsItems.map((goodsItems) => (
+                <DIV key={goodsItems.goodsId}>
+                  <Link to={`detail/${goods.goodsId}`}>
+                    <img src={goodsItems.goodsImage} />
+                  </Link>
+                  <div className="goodsname">{goodsItems.goodsName}</div>
+                  <div className="pricename">
+                    {Number(goodsItems.price).toLocaleString("kr")}
+                    {"원"}
+                  </div>
+                </DIV>
+              ))}
+            </BigDiv>
           </>
         )}
       </CarouselStyle>
@@ -155,6 +161,15 @@ const Carousel = ({ goodsItems }) => {
 export default Carousel;
 
 const CarouselStyle = styled(Slider)`
+  .goodsname {
+    margin-top: 5px;
+  }
+  .pricename {
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 3px;
+  }
+
   img {
     width: 240px;
     height: 320px;
@@ -203,4 +218,14 @@ const InnerWrap = styled.div`
     margin-bottom: 20px;
     gap: 10px;
   }
+`;
+
+const DIV = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin-right: 10px;
+`;
+const BigDiv = styled.div`
+  display: flex;
 `;

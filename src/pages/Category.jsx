@@ -3,6 +3,9 @@ import Layout from "../components/Layout";
 import styled from "styled-components";
 import Menubar from "../features/CategoryPage/Menubar";
 import ListPage from "../features/CategoryPage/ListPage";
+import Footer from "../features/footer/Footer";
+import FooterBottom from "../features/footer/FooterBottom";
+import FooterRights from "../features/footer/FooterRights";
 
 export default function Category() {
   return (
@@ -26,6 +29,9 @@ export default function Category() {
         <Menubar />
         <ListPage />
       </div>
+      {/* <Footer />
+      <FooterBottom />
+      <FooterRights /> */}
     </Layout>
   );
 }

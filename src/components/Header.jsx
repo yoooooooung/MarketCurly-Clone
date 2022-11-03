@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Navbar from "../features/hamburgerMenu/Navbar";
+import Navbar from "../features/HamburgerMenu/Navbar";
 import { AiOutlineMenu } from "react-icons/ai";
 import kurlyLogo from "../img/logo2.png";
 import { useNavigate } from "react-router-dom";

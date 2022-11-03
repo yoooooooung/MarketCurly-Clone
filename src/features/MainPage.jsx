@@ -88,7 +88,7 @@ export default function MainPage() {
           <Slider {...settings2}>
             {goods.map((abc) => (
               <div key={abc.goodsId}>
-                <Link to={`detail/${abc.goodsId}`}>
+                <Link to={`detail/${Number(abc.goodsId)}`}>
                   <img src={abc.goodsImage} />
                 </Link>
                 <div className="goodsname">{abc.goodsName}</div>

@@ -8,6 +8,10 @@ import GetReivew from '../features/review/GetReview';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getDetails } from '../redux/modules/detailSlice';
 import { useParams } from 'react-router-dom';
+import Footer from '../features/footer/Footer';
+import FooterBottom from '../features/footer/FooterBottom';
+import FooterRights from '../features/footer/FooterRights';
+import Loading from '../components/Loading';
 
 const Detail = () => {
    const id = useParams();
@@ -21,7 +25,7 @@ const Detail = () => {
    }, [dispatch]);
 
    if (isLoading) {
-      return <div>로딩 중....</div>;
+      return <Loading />;
    }
 
    if (error) {
@@ -167,7 +171,10 @@ const Detail = () => {
          </Menubar>
          <BigImg src={detail.goodsImage} />
          <NameFeild>{detail.goodsName}</NameFeild>
-         <GetReivew />
+         <GetReivew goodsName={detail.goodsName}/>
+         <Footer />
+         <FooterBottom />
+         <FooterRights />
       </Layout>
    );
 };
@@ -180,7 +187,6 @@ const UpperWrapper = styled.div`
    margin-top: 30px;
 `;
 
-
 const Img = styled.img`
    width: 430px;
    height: 552px;
@@ -190,7 +196,7 @@ const BigImg = styled.img`
    transform: rotate(90deg);
    width: 810px;
    margin-left: 120px;
-`
+`;
 
 const GoodsName = styled.div`
    justify-content: space-between;
@@ -389,7 +395,7 @@ const Menubar = styled.div`
       border: 0.5px solid #bebebe;
    }
 
-   div:first-child{
+   div:first-child {
       background-color: #fff;
       border-bottom: none;
       color: purple;
@@ -405,4 +411,4 @@ const NameFeild = styled.div`
    color: gray;
    margin-top: -100px;
    margin-bottom: 60px;
-`
+`;

@@ -72,9 +72,6 @@ export default function Header() {
         </Row2>
         <Row3>
           <Ctgs>
-            <p>
-              <AiOutlineMenu />
-            </p>
             <Navbar />
           </Ctgs>
           <Menus>

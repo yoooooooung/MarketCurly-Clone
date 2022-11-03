@@ -6,10 +6,9 @@ import { useEffect } from 'react';
 import { __getComments } from '../../redux/modules/commentSlice';
 import { useParams } from 'react-router-dom';
 
-const GetReivew = () => {
+const GetReivew = ({goodsName}) => {
    const id = useParams();
    const dispatch = useDispatch();
-   //    const { isLoading, error } = useSelector((state)=>state.comments)
    const comments = useSelector((state) => state.review.comments);
 
    useEffect(() => {
@@ -36,15 +35,13 @@ const GetReivew = () => {
          <div>
             {comments.map((comment) => (
                <ReviewDiv key={comment.commentsId}>
-                  <div>{comment.userName}</div>
-                  <div>
-                     <div></div>
-                     <Name>상품명</Name>
+                  <UserName>{comment.userName}</UserName>
+                  <GoodsReview>
+                     <GoodsName>{goodsName}</GoodsName>
                      <Review>{comment.content}</Review>
                      <Img src={comment.commentImage} />
                      <Date>{comment.updatedAt.substr(0, 10)}</Date>
-                     <div></div>
-                  </div>
+                  </GoodsReview>
                   <ThumbBtn>
                      <FiThumbsUp />
                      도움돼요
@@ -66,6 +63,8 @@ const ReviewSubject = styled.div`
 
 const RiviewTerm = styled.div`
    margin-bottom: 30px;
+   padding-bottom: 40px;
+   border-bottom: 1px solid black;
    span {
       font-size: 14px;
       color: #7b7b7b;
@@ -77,24 +76,25 @@ const RiviewTerm = styled.div`
    }
 `;
 
+const GoodsReview = styled.div`
+width: 700px;
+   
+`
 const ReviewDiv = styled.div`
-   border-top: 1px solid black;
    padding-top: 20px;
    padding-bottom: 20px;
    display: flex;
+   justify-content: space-between;
    font-size: 14px;
-
-   div:first-child {
-      width: 250px;
-      padding-left: 20px;
-   }
-
-   div:last-child {
-      margin-left: 330px;
-   }
+   border-bottom: 0.5px solid #787878;
 `;
 
-const Name = styled.div`
+const UserName = styled.div`
+   width: 100px;
+   padding-left: 20px;
+`;
+
+const GoodsName = styled.div`
    color: gray;
    padding-bottom: 10px;
 `;
@@ -116,7 +116,7 @@ const ThumbBtn = styled.div`
    color: gray;
    border: 1px solid #cbcbcb;
    border-radius: 15px;
-   /* margin-top: 60px; */
+   margin-top: 20px;
    font-size: 12px;
 `;
 

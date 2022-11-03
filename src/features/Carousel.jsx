@@ -140,7 +140,7 @@ const Carousel = ({ goodsItems }) => {
             <BigDiv>
               {goodsItems.map((goodsItems) => (
                 <DIV key={goodsItems.goodsId}>
-                  <Link to={`detail/${Number(goods.goodsId)}`}>
+                  <Link to={`detail/${Number(goodsItems.goodsId)}`}>
                     <img src={goodsItems.goodsImage} />
                   </Link>
                   <div className="goodsname">{goodsItems.goodsName}</div>

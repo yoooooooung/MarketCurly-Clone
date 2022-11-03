@@ -74,7 +74,7 @@ const Carousel = ({ goodsItems }) => {
                     dispatch(__getGoodsVege(cate[index]));
                   }}
                 >
-                  <MenuIcon name={item} index={index} clickMenu={clickMenu} />{" "}
+                  <MenuIcon name={item} index={index} clickMenu={clickMenu} />
                 </div>
               ) : (
                 ""
@@ -91,7 +91,7 @@ const Carousel = ({ goodsItems }) => {
                     setClickMenu(index);
                   }}
                 >
-                  <MenuIcon name={item} index={index} clickMenu={clickMenu} />{" "}
+                  <MenuIcon name={item} index={index} clickMenu={clickMenu} />
                 </div>
               ) : (
                 ""
@@ -123,7 +123,7 @@ const Carousel = ({ goodsItems }) => {
             <BigDiv>
               {goods.map((goods) => (
                 <DIV key={goods.goodsId}>
-                  <Link to={`detail/${goods.goodsId}`}>
+                  <Link to={`detail/${Number(goods.goodsId)}`}>
                     <img src={goods.goodsImage} />
                   </Link>
                   <div className="goodsname">{goods.goodsName}</div>
@@ -140,7 +140,7 @@ const Carousel = ({ goodsItems }) => {
             <BigDiv>
               {goodsItems.map((goodsItems) => (
                 <DIV key={goodsItems.goodsId}>
-                  <Link to={`detail/${goods.goodsId}`}>
+                  <Link to={`detail/${Number(goods.goodsId)}`}>
                     <img src={goodsItems.goodsImage} />
                   </Link>
                   <div className="goodsname">{goodsItems.goodsName}</div>

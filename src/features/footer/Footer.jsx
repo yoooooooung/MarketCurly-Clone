@@ -77,6 +77,7 @@ const CsNum = styled.div`
 `;
 
 const FooterTop = styled.div`
+  margin-top: 70px;
   display: flex;
   border-top: 0.5px solid rgb(220, 220, 220);
 `;

@@ -18,7 +18,6 @@ const ListPage = () => {
       const { data } = await axios.get(
         `https://kyuudukk.shop/goods/${categoryName}`
       );
-      console.log("data두번", data.data);
       return setCurrentList(data.data);
     } catch (error) {
       return alert(error);

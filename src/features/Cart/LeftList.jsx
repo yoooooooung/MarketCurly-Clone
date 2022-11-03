@@ -42,11 +42,11 @@ export default function LeftList() {
     newistGet();
   }, []);
 
-  const onClickDeleteButtonHandler = (a) => {
-    Swal.fire({
+  const onClickDeleteButtonHandler = async (a) => {
+    await Swal.fire({
       title: "삭제되었습니다",
-      timer: 1000,
-      showConfirmButton: false,
+      // timer: 1000,
+      // showConfirmButton: false,
     }).then((result) => {
       if (result.isConfirmed) {
         axios.delete(`https://kyuudukk.shop/carts/${a}`, {
@@ -91,7 +91,6 @@ export default function LeftList() {
       // 전체 체크 박스가 체크 되면 cartsId를 가진 모든 elements를 idArray배열에 넣어주고, 전체 체크 박스 체크
       cart.forEach((el) => idArray.push(el.cartsId));
       setCheckItems(idArray);
-      console.log("idArray :", idArray);
     }
 
     // 반대의 경우 전체 체크 박스 체크 삭제
@@ -99,8 +98,6 @@ export default function LeftList() {
       setCheckItems([]);
     }
   };
-
-  console.log("checkItems :", checkItems);
   // console.log("cart.length :", cart.length);
 
   const handleChange = (e) => {
@@ -201,7 +198,7 @@ export default function LeftList() {
                             원
                           </Price>
                           <Del
-                            onClick={(e) => {
+                            onClick={() => {
                               onClickDeleteButtonHandler(abc.cartsId);
                             }}
                           >

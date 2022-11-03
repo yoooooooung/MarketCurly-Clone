@@ -26,7 +26,6 @@ const Detail = () => {
     dispatch(__getDetails(Number(id.goodsId)));
   }, [dispatch]);
 
-  console.log("id값", id);
   if (isLoading) {
     return <Loading />;
   }
@@ -48,9 +47,6 @@ const Detail = () => {
     });
     setQty(1);
   };
-
-  console.log("qty :", qty);
-  console.log("toCart확인 :", toCart);
 
   return (
     <Layout>

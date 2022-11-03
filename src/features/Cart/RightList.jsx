@@ -7,8 +7,6 @@ export default function RightList({ totalDevide, checkItems }) {
   const token = localStorage.getItem("token");
   const location = localStorage.getItem("address");
   // const [checkItems, setCheckItems] = useState([]);
-  console.log(location);
-  console.log(localStorage);
   const orderAlert = async (a) => {
     await Swal.fire({
       title: "주문하시겠습니까?",
@@ -34,7 +32,6 @@ export default function RightList({ totalDevide, checkItems }) {
     });
     window.location.replace("/cart");
   };
-  console.log("totalDevide", totalDevide);
 
   // const handleSingleCheck = (checked, id) => {
   //   if (checked) {

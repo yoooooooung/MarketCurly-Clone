@@ -5,6 +5,8 @@ import user from "../modules/userSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import mainpageSlice from "../modules/mainpageSlice";
 import vegeSlice from "../modules/vegeSlice";
+import review from '../modules/commentSlice'
+import detail from '../modules/detailSlice'
 
 // const rootReducer = combineReducers({
 //   //리듀서 이름넣기
@@ -17,6 +19,8 @@ const store = configureStore({
     user: user,
     mainpageSlice: mainpageSlice,
     vegeSlice: vegeSlice,
+    review: review,
+    detail: detail
   },
 });
 

@@ -3,19 +3,19 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
-export default function RightList() {
+export default function RightList({ totalDevide, checkItems }) {
   const token = localStorage.getItem("token");
-  const [checkItems, setCheckItems] = useState([]);
+  // const [checkItems, setCheckItems] = useState([]);
 
-  const orderAlert = (a) => {
-    Swal.fire({
+  const orderAlert = async (a) => {
+    await Swal.fire({
       title: "주문하시겠습니까?",
       confirmButtonColor: "#7a2295",
     }).then((result) => {
       if (result.isConfirmed) {
         //컨펌시 해당 카트 아이디 모두 다 지우고
-        a.map((b) => {
-          axios.delete(`https://kyuudukk.shop/carts/${b.cartsId}`, {
+        checkItems.map((b) => {
+          axios.delete(`https://kyuudukk.shop/carts/${b}`, {
             headers: {
               authorization: `Bearer ${token}`,
             },
@@ -30,16 +30,18 @@ export default function RightList() {
         });
       }
     });
+    window.location.replace("/cart");
   };
+  console.log("totalDevide", totalDevide);
 
-  const handleSingleCheck = (checked, id) => {
-    if (checked) {
-      setCheckItems([...checkItems, id]);
-    } else {
-      // 체크 해제
-      setCheckItems(checkItems.filter((el) => el !== id));
-    }
-  };
+  // const handleSingleCheck = (checked, id) => {
+  //   if (checked) {
+  //     setCheckItems([...checkItems, id]);
+  //   } else {
+  //     // 체크 해제
+  //     setCheckItems(checkItems.filter((el) => el !== id));
+  //   }
+  // };
 
   const onClickDeleteButtonHandler = (a) => {
     axios.delete(`https://kyuudukk.shop/carts/${a}`, {
@@ -60,44 +62,90 @@ export default function RightList() {
           </p>
           <button>배송지 변경</button>
         </Info>
-        <Amount>
-          <div>
-            <span>상품금액</span>
-            <span>
-              <Prc>18,000</Prc>원
-            </span>
-          </div>
-          <div>
-            <span>상품할인금액</span>
-            <span>
-              <Prc>0</Prc>원
-            </span>
-          </div>
-          <div>
-            <span>배송비</span>
-            <span>
-              + <Prc>3000</Prc>원
-            </span>
-          </div>
-          <p>
+        {totalDevide == undefined ? (
+          <>
+            <Amount>
+              <div>
+                <span>상품금액</span>
+                <span>
+                  <Prc>0</Prc>원
+                </span>
+              </div>
+              <div>
+                <span>상품할인금액</span>
+                <span>
+                  <Prc>0</Prc>원
+                </span>
+              </div>
+              <div>
+                <span>배송비</span>
+                <span>
+                  + <Prc>0</Prc>원
+                </span>
+              </div>
+              {/* <p>
             12,000원 추가주문시, <strong>무료배송</strong>
-          </p>
-          <Total>
-            <span>결제예정금액</span>
-            <span>
-              <PrcB>
-                <strong>21,000</strong>
-              </PrcB>
-              원
-            </span>
-          </Total>
-          <p>
-            <YL>적립</YL>
-            <span>로그인 후 회원 등급에 따라 적립</span>
-          </p>
-        </Amount>
+          </p> */}
+              <Total>
+                <span>결제예정금액</span>
+                <span>
+                  <PrcB>
+                    <strong>0</strong>
+                  </PrcB>
+                  원
+                </span>
+              </Total>
+              <p>
+                <YL>적립</YL>
+                <span>로그인 후 회원 등급에 따라 적립</span>
+              </p>
+            </Amount>
+          </>
+        ) : (
+          <>
+            <Amount>
+              <div>
+                <span>상품금액</span>
+                <span>
+                  <Prc>{Number(totalDevide).toLocaleString("ko-KR")}</Prc>원
+                </span>
+              </div>
+              <div>
+                <span>상품할인금액</span>
+                <span>
+                  <Prc>0</Prc>원
+                </span>
+              </div>
+              <div>
+                <span>배송비</span>
+                <span>
+                  + <Prc>3,000</Prc>원
+                </span>
+              </div>
+              {/* <p>
+            12,000원 추가주문시, <strong>무료배송</strong>
+          </p> */}
+              <Total>
+                <span>결제예정금액</span>
+                <span>
+                  <PrcB>
+                    <strong>
+                      {Number(totalDevide + 3000).toLocaleString("ko-KR")}
+                    </strong>
+                  </PrcB>
+                  원
+                </span>
+              </Total>
+              <p>
+                <YL>적립</YL>
+                <span>로그인 후 회원 등급에 따라 적립</span>
+              </p>
+            </Amount>
+          </>
+        )}
+
         <Bt>
-          <Order onClick={() => orderAlert()}>주문하기</Order>
+          <Order onClick={(a) => orderAlert(a)}>주문하기</Order>
           <ul>
             <li>· [주문완료] 상태일 경우에만 주문 취소 가능합니다.</li>
             <li>

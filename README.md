@@ -3,13 +3,21 @@
 
 <img src="https://user-images.githubusercontent.com/113872386/201150446-25520af4-ebe5-4ec5-94b8-55c39c3887cd.png"  width="700">
 
+### 시현영상
+https://youtu.be/eaBLP8YEkYs
+
+<br>
 
 ### 선정이유
 CRUD를 응용하여 새로운 기능을 구현할 수 있는지를 고려하며,
 웹사이트중 많은 비중을 차지하는 쇼핑몰 형태의 사이트를 선정하였다.
 
+<br>
+
 ### 진행기간
 22.10.28 ~ 22.11.03 (7일)
+
+<br>
 
 ### FE팀원
 |이름|역할 분담|github|
